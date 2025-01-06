@@ -1,0 +1,146 @@
+#====================================================================
+# Project Info
+
+name: meeting
+description: "A new Flutter project."
+version: 1.0.0+1
+
+#====================================================================
+# Flutter Version
+
+environment:
+  sdk: ^3.5.4
+
+#====================================================================
+# Dependencies
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #-------------------------------------
+  ## Basic
+  get: any
+  intl: any
+
+  #-------------------------------------
+  ## Network
+  http: any
+  url_launcher: any
+
+  #-------------------------------------
+  ## Locale Data
+  hive: any
+  path_provider: any
+
+  ##-------------------------------------
+  ## Icons
+  iconsax: any
+  cupertino_icons: any
+  iconsax_plus: ^1.0.0
+
+  ##-------------------------------------
+  ## PDF
+  pdf: ^3.11.1
+  printing: any
+  alh_pdf_view: ^2.3.0
+
+  ##-------------------------------------
+  ## Image
+  image_picker: any
+  image_network: any
+
+  #-------------------------------------
+  ## Firebase
+  firebase_core: any
+  firebase_analytics: any
+  firebase_remote_config: any
+  firebase_crashlytics: any
+
+  #-------------------------------------
+  ## Other
+
+  auto_size_text: any # Automatic text size
+  webview_flutter: any
+  permission_handler: any
+  mobkit_dashed_border: ^0.0.7
+  signature: ^5.5.0
+  file_picker: ^8.1.6
+  flutter_cached_pdfview: ^0.4.3
+  downloadsfolder: ^1.1.1
+
+  #-------------------------------------
+  ## Edit Package
+  country_flags: ^2.2.0
+  json_annotation: ^4.8.1
+  flutter_multi_formatter: ^2.12.4
+
+#====================================================================
+# Dev Dependencies
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+  flutter_native_splash: any
+
+#====================================================================
+# Splash Screen
+
+flutter_native_splash:
+  color: '#FFFFFF'
+  image: assets/images/splash/splash.png
+  color_dark: '#0D7872'
+  image_dark: assets/images/splash/splash.png
+  android_12:
+    color: '#FFFFFF'
+    image: assets/images/splash/splash.png
+    color_dark: '#0D7872'
+    image_dark: assets/images/splash/splash.png
+  fullscreen: true
+  android: true
+  ios: true
+#  flutter pub run flutter_native_splash:create
+
+#====================================================================
+# Assets
+
+flutter:
+  uses-material-design: true
+  #-------------------------------------
+  ## Images & Icons
+
+  assets:
+    # pubspec.yaml: It must be present to access package data, application name and version
+    - pubspec.yaml
+    - assets/images/
+    - assets/images/logos/
+    - assets/images/empty/
+    - assets/images/splash/
+    - assets/fonts/
+
+  #-------------------------------------
+  ## Fonts
+
+  fonts:
+    - family: IBMPlexSansArabic
+      fonts:
+        - asset: assets/fonts/IBMPlexSansArabic-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/IBMPlexSansArabic-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/IBMPlexSansArabic-Light.ttf
+          weight: 300
+        - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/IBMPlexSansArabic-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSansArabic-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/IBMPlexSansArabic-Bold.ttf
+          weight: 700
+
+    - family: Icon_x
+      fonts:
+        - asset: assets/fonts/Icon_x.ttf

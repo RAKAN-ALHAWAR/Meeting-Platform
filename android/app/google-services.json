@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "958122062330",
+    "project_id": "meeting-platform-app",
+    "storage_bucket": "meeting-platform-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958122062330:android:4646e16a866bdb18837443",
+        "android_client_info": {
+          "package_name": "com.meeting.givingportal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP8brc714OS-tu66wo_Od2BgAniPixnPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
