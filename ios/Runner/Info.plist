@@ -2,18 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
-	    <key>FirebaseCrashlyticsCollectionEnabled</key>
-        <true/>
+		<key>FirebaseCrashlyticsCollectionEnabled</key>
+		<true/>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs photo studio permission</string>
-        <key>NSPhotoLibraryAddUsageDescription</key>
+		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>We need permission to save photos to the photo library.</string>
-        <key>NSDocumentsFolderUsageDescription</key>
-        <string>We need access to documents to select files.</string>
-        <key>UIFileSharingEnabled</key>
-        <true/>
-        <key>LSSupportsOpeningDocumentsInPlace</key>
-        <true/>
+		<key>NSDocumentsFolderUsageDescription</key>
+		<string>We need access to documents to select files.</string>
+		<key>UIFileSharingEnabled</key>
+		<true/>
+		<key>LSSupportsOpeningDocumentsInPlace</key>
+		<true/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

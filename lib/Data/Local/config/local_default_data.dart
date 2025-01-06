@@ -7,8 +7,9 @@ part of '../../data.dart';
 class LocalDefaultDataX {
   static String route = RouteNameX.login;
   static String token = '';
-  static bool themeIsDark = Get.isPlatformDarkMode;
-  static String language = 'ar';
-  // static String language = Get.deviceLocale?.languageCode ??
-  //     TranslationX.fallbackLocale.languageCode;
+  static bool themeIsDark = false;
+  // static bool themeIsDark = Get.isPlatformDarkMode;
+  // static String language = 'ar';
+  static String language = Get.deviceLocale?.languageCode ??
+      TranslationX.fallbackLocale.languageCode;
 }
