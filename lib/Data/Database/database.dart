@@ -10,7 +10,8 @@ class DatabaseX {
       /// Here codes are added to configure anything within this section when the application starts
       DBEndPointX.mainAPI = FirebaseRemoteConfigServiceX.getString(
         'base_url',
-        'https://meeting-testing.edialoguecenter.com/api/',
+        'https://meeting.edialoguec.sa/api/',
+        // 'https://meeting-testing.edialoguecenter.com/api/',
       );
     } catch (e) {
       return Future.error(e);
@@ -71,6 +72,9 @@ class DatabaseX {
     var data = await RemoteDataSourceX.post(
       DBEndPointX.postUpdatePassword,
       body: form.toJson(),
+      param: DataSourceParamX(
+        authToken: LocalDataX.token,
+      ),
     );
     return data.$2;
   }
@@ -160,13 +164,13 @@ class DatabaseX {
       var data = await RemoteDataSourceX.get(
         DBEndPointX.getStatistics,
         param: DataSourceParamX(
-            localCacheKey: 'statistics',
-            localCacheMaxAge: const Duration(days: 3),
-            authToken: LocalDataX.token,
+          localCacheKey: 'statistics',
+          localCacheMaxAge: const Duration(days: 3),
+          authToken: LocalDataX.token,
         ),
       );
       return StatisticsX.fromJson(data.$1);
-    }catch(_){
+    } catch (_) {
       return StatisticsX(meetingCount: 0, newMeetingCount: 0);
     }
   }
@@ -177,7 +181,7 @@ class DatabaseX {
   static Future<
       (
         MeetingX meeting,
-        AttendanceX attendance,
+        AttendanceX? attendance,
         List<String> permissions,
       )> getMeetingDetails({
     required String id,
@@ -185,7 +189,7 @@ class DatabaseX {
     var data = await RemoteDataSourceX.get(
       DBEndPointX.getMeetingDetails,
       param: DataSourceParamX(
-        localCacheKey: 'meeting-$id',
+        localCacheKey: 'meeting-${id}_${LocalDataX.token}',
         localCacheMaxAge: const Duration(days: 3),
         authToken: LocalDataX.token,
         pathParams: {
@@ -193,14 +197,13 @@ class DatabaseX {
         },
       ),
     );
+
     return (
       MeetingX.fromJson(
         Map<String, dynamic>.from(data.$1[NameX.meeting]),
       ),
-      AttendanceX.fromJson(
-        Map<String, dynamic>.from(data.$1[NameX.attendance]),
-      ),
-      List<String>.from(data.$1[NameX.permissions] ?? [])
+      Map<String, dynamic>.from(data.$1[NameX.attendance]??{}).toFromJsonNullableX(AttendanceX.fromJson),
+      List<String>.from(data.$1[NameX.permissions] ?? []),
     );
   }
 
@@ -214,7 +217,7 @@ class DatabaseX {
       param: DataSourceParamX(
         page: page,
         limit: perPage,
-        localCacheKey: 'all_meetings_$page',
+        localCacheKey: 'all_meetings_${page}_${LocalDataX.token}',
         localCacheMaxAge: const Duration(days: 3),
         authToken: LocalDataX.token,
         filterParams: {
@@ -232,21 +235,21 @@ class DatabaseX {
     int page = 1,
     int perPage = 15,
   }) async {
-    try{
-    var data = await RemoteDataSourceX.get(
-      DBEndPointX.getAllRecurringMeetings,
-      param: DataSourceParamX(
-        page: page,
-        limit: perPage,
-        localCacheKey: 'all_recurring_meetings_$page',
-        localCacheMaxAge: const Duration(days: 3),
-        authToken: LocalDataX.token,
-      ),
-    );
-    return ModelUtilX.generateItems(
-      (data.$1[NameX.meetings]?[NameX.data]) ?? [],
-      MeetingX.fromJson,
-    );
+    try {
+      var data = await RemoteDataSourceX.get(
+        DBEndPointX.getAllRecurringMeetings,
+        param: DataSourceParamX(
+          page: page,
+          limit: perPage,
+          localCacheKey: 'all_recurring_meetings_${page}_${LocalDataX.token}',
+          localCacheMaxAge: const Duration(days: 3),
+          authToken: LocalDataX.token,
+        ),
+      );
+      return ModelUtilX.generateItems(
+        (data.$1[NameX.meetings]?[NameX.data]) ?? [],
+        MeetingX.fromJson,
+      );
     } catch (error) {
       if (error.toErrorX.errorCode == ErrorCodesX.unauthorized) {
         AppControllerX app = Get.find();
@@ -263,24 +266,24 @@ class DatabaseX {
     int perPage = 15,
     MeetingStatusStatusX? status,
   }) async {
-    try{
-    var data = await RemoteDataSourceX.get(
-      DBEndPointX.getAllMyMeetings,
-      param: DataSourceParamX(
-        page: page,
-        limit: perPage,
-        localCacheKey: 'all_my_meetings_$page',
-        localCacheMaxAge: const Duration(days: 3),
-        authToken: LocalDataX.token,
-        filterParams: {
-          NameX.status: status?.name ?? '',
-        },
-      ),
-    );
-    return ModelUtilX.generateItems(
-      (data.$1[NameX.meetings]?[NameX.data]) ?? [],
-      MeetingX.fromJson,
-    );
+    try {
+      var data = await RemoteDataSourceX.get(
+        DBEndPointX.getAllMyMeetings,
+        param: DataSourceParamX(
+          page: page,
+          limit: perPage,
+          localCacheKey: 'all_my_meetings_${page}_${LocalDataX.token}',
+          localCacheMaxAge: const Duration(days: 3),
+          authToken: LocalDataX.token,
+          filterParams: {
+            NameX.status: status?.name ?? '',
+          },
+        ),
+      );
+      return ModelUtilX.generateItems(
+        (data.$1[NameX.meetings]?[NameX.data]) ?? [],
+        MeetingX.fromJson,
+      );
     } catch (error) {
       if (error.toErrorX.errorCode == ErrorCodesX.unauthorized) {
         AppControllerX app = Get.find();
@@ -296,25 +299,23 @@ class DatabaseX {
     var data = await RemoteDataSourceX.get(
       DBEndPointX.getAllNewMeetings,
       param: DataSourceParamX(
-        localCacheKey: 'new_meetings',
+        localCacheKey: 'new_meetings_${LocalDataX.token}',
         localCacheMaxAge: const Duration(days: 3),
         authToken: LocalDataX.token,
       ),
     );
     return ModelUtilX.generateItems(
-      data.$1[NameX.newMeeting] ?? [],
+      data.$1[NameX.newMeeting]?[NameX.data] ?? [],
       MeetingX.fromJson,
     );
   }
+
   static Future<String?> addSignatureMeetingMinutes(String meetingId) async {
     var data = await RemoteDataSourceX.post(
       DBEndPointX.postAddSignatureMeetingMinutes,
-      param: DataSourceParamX(
-        authToken: LocalDataX.token,
-        pathParams: {
-          NameX.id:meetingId,
-        }
-      ),
+      param: DataSourceParamX(authToken: LocalDataX.token, pathParams: {
+        NameX.id: meetingId,
+      }),
     );
     return data.$2;
   }
@@ -440,16 +441,16 @@ class DatabaseX {
   // Dashboard
 
   static Future<DashboardX> getDashboard() async {
-    try{
-    var data = await RemoteDataSourceX.get(
-      DBEndPointX.getDashboard,
-      param: DataSourceParamX(
-        localCacheKey: 'Dashboard',
-        localCacheMaxAge: const Duration(days: 3),
-        authToken: LocalDataX.token,
-      ),
-    );
-    return DashboardX.fromJson(Map<String, dynamic>.from(data.$1));
+    try {
+      var data = await RemoteDataSourceX.get(
+        DBEndPointX.getDashboard,
+        param: DataSourceParamX(
+          localCacheKey: 'Dashboard',
+          localCacheMaxAge: const Duration(days: 3),
+          authToken: LocalDataX.token,
+        ),
+      );
+      return DashboardX.fromJson(Map<String, dynamic>.from(data.$1));
     } catch (error) {
       if (error.toErrorX.errorCode == ErrorCodesX.unauthorized) {
         AppControllerX app = Get.find();
@@ -466,24 +467,24 @@ class DatabaseX {
 
   static Future<(int count, List<NotificationX> notifiction)>
       getAllNotifications() async {
-    try{
-    var data = await RemoteDataSourceX.get(
-      DBEndPointX.getNotifications,
-      param: DataSourceParamX(
-        localCacheKey: 'Notifications',
-        localCacheMaxAge: const Duration(days: 3),
-        languageCode: TranslationX.getLanguageCode,
-        authToken: LocalDataX.token,
-      ),
-    );
-    int count = data.$1?[NameX.count] ?? 0;
-    List<NotificationX> notifications = ModelUtilX.generateItems(
-      data.$1[NameX.myNotifications],
-      NotificationX.fromJson,
-    );
-    return (count, notifications);
-    }catch(_){
-      return (0,<NotificationX>[]);
+    try {
+      var data = await RemoteDataSourceX.get(
+        DBEndPointX.getNotifications,
+        param: DataSourceParamX(
+          localCacheKey: 'Notifications',
+          localCacheMaxAge: const Duration(days: 3),
+          languageCode: TranslationX.getLanguageCode,
+          authToken: LocalDataX.token,
+        ),
+      );
+      int count = data.$1?[NameX.count] ?? 0;
+      List<NotificationX> notifications = ModelUtilX.generateItems(
+        data.$1[NameX.myNotifications],
+        NotificationX.fromJson,
+      );
+      return (count, notifications);
+    } catch (_) {
+      return (0, <NotificationX>[]);
     }
   }
 
@@ -746,19 +747,19 @@ class DatabaseX {
     int page = 1,
     int perPage = 15,
   }) async {
-    try{
-    var data = await RemoteDataSourceX.get(
-      DBEndPointX.getAllDelegates,
-      param: DataSourceParamX(
-        page: page,
-        limit: perPage,
-        authToken: LocalDataX.token,
-      ),
-    );
-    return ModelUtilX.generateItems(
-      data.$1[NameX.delegate]?[NameX.data],
-      DelegateX.fromJson,
-    );
+    try {
+      var data = await RemoteDataSourceX.get(
+        DBEndPointX.getAllDelegates,
+        param: DataSourceParamX(
+          page: page,
+          limit: perPage,
+          authToken: LocalDataX.token,
+        ),
+      );
+      return ModelUtilX.generateItems(
+        data.$1[NameX.delegate]?[NameX.data],
+        DelegateX.fromJson,
+      );
     } catch (error) {
       if (error.toErrorX.errorCode == ErrorCodesX.unauthorized) {
         AppControllerX app = Get.find();

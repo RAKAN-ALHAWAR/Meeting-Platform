@@ -42,7 +42,7 @@ class StatusButtonsPresenceStatus extends GetView<MeetingDetailsController> {
         return Row(
           children: [
             for (int i = 0; i < presenceStatus.length; i++)
-
+        
               /// Buttons
               Expanded(
                 child: GestureDetector(
@@ -50,7 +50,7 @@ class StatusButtonsPresenceStatus extends GetView<MeetingDetailsController> {
                   child: ContainerX(
                     height: 45,
                     radius: 8,
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.symmetric(horizontal: 6),
                     isBorder: false,
                     margin: EdgeInsetsDirectional.only(
                       end: i != presenceStatus.length - 1 ? 8 : 0,
@@ -58,34 +58,38 @@ class StatusButtonsPresenceStatus extends GetView<MeetingDetailsController> {
                     color: controller.selectedPresenceStatus.value == i
                         ? selectedColors[i]
                         : ColorX.grey.shade50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        /// Icon
-                        Icon(
-                          presenceIcons[i],
-                          size: i != presenceStatus.length - 1 ? 23 : 18,
-                          color: controller.selectedPresenceStatus.value == i
-                              ? Colors.white
-                              : presenceIconColors[i],
-                        ),
-                        const SizedBox(width: 4),
-
-                        /// Title
-                        TextX(
-                          presenceStatus[i],
-                          maxLines: 1,
-                          size: 13,
-                          color: controller.selectedPresenceStatus.value == i
-                              ? Colors.white
-                              : null,
-                          fontWeight:
-                              controller.selectedPresenceStatus.value == i
-                                  ? FontWeight.w700
-                                  : FontWeight.w500,
-                        ),
-                      ],
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          /// Icon
+                          Icon(
+                            presenceIcons[i],
+                            size: i != presenceStatus.length - 1 ? 23 : 18,
+                            color: controller.selectedPresenceStatus.value == i
+                                ? Colors.white
+                                : presenceIconColors[i],
+                          ),
+                          const SizedBox(width: 4),
+                          
+                          /// Title
+                          TextX(
+                            presenceStatus[i],
+                            maxLines: 1,
+                            size: 13,
+                            color: controller.selectedPresenceStatus.value == i
+                                ? Colors.white
+                                : null,
+                            fontWeight:
+                                controller.selectedPresenceStatus.value == i
+                                    ? FontWeight.w700
+                                    : FontWeight.w500,
+                          ),
+                          SizedBox(width: 5)
+                        ],
+                      ),
                     ),
                   ),
                 ).fadeAnimation250,

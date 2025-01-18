@@ -86,7 +86,18 @@ class ValidateX{
     }
     return null;
   }
-
+  static String? changePassword(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Password Required'.tr;
+    } else if (value.trim().length < 8) {
+      return 'Password must be at least 8 characters long'.tr;
+    } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'Password must contain at least one uppercase letter'.tr;
+    } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+      return 'Password must include at least one special character'.tr;
+    }
+    return null;
+  }
   static String? rePassword(String? value,String password) {
     if (value!.trim().isEmpty) {
       return 'Confirm password Required'.tr;

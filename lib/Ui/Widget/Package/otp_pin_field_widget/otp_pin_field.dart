@@ -1,4 +1,4 @@
-library otp_pin_field;
+library;
 
 export 'src/cursor_painter.dart';
 export 'src/custom_keyboard.dart';

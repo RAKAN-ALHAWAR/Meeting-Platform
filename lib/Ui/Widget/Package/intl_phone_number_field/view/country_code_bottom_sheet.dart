@@ -88,10 +88,7 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
   }
 
   void search(String search) {
-    searchCountries = mainCountries
-        .where((element) =>
-            element.name.tr.toLowerCase().contains(search.tr.toLowerCase()))
-        .toList();
+    searchCountries = mainCountries.where((element) =>  element.name.tr.toLowerCase().contains(search.tr.toLowerCase()) || element.dial_code.tr.toLowerCase().contains(search.tr.toLowerCase())).toList();
     setState(() {});
   }
 }

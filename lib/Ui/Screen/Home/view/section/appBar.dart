@@ -40,7 +40,7 @@ class AppBarForHome extends GetView<HomeController> {
                       height: 58,
                       width: 58,
                       imageUrl: controller.app.user.value.imageUrl ?? "",
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
 
                       /// Empty State
                       empty: Center(

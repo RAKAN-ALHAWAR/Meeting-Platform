@@ -16,6 +16,7 @@ class SignaturesView extends GetView<SignaturesController> {
       body: SafeArea(
         child: Obx(
           () {
+            print( controller.signature.value);
             if (controller.signature.value != null) {
               /// Show Signature
               return SingleChildScrollView(

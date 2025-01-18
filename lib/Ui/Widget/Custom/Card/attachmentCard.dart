@@ -43,7 +43,7 @@ class AttachmentCardX extends StatelessWidget {
                       height: 45,
                       width: 45,
                       radius: 12,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                       empty: Center(
                         child: Icon(
                           IconsaxPlusLinear.document_text_1,

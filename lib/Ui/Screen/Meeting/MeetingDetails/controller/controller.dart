@@ -40,7 +40,7 @@ class MeetingDetailsController extends GetxController
 
   /// Main variables
   late Rx<MeetingX> meeting;
-  late Rx<AttendanceX> myAttendance;
+  Rx<AttendanceX?> myAttendance = Rx(null);
   Rx<SuggestionX?> mySuggestion = Rx(null);
   Rx<DelegateX?> myDelegate = Rx(null);
 
@@ -116,7 +116,9 @@ class MeetingDetailsController extends GetxController
     /// Get Meeting & Attendance & Permissions Data
     var result = await DatabaseX.getMeetingDetails(id: id);
     meeting = result.$1.obs;
-    myAttendance = result.$2.obs;
+    if(result.$2!=null) {
+      myAttendance = result.$2!.obs;
+    }
     permissions = result.$3.obs;
 
     /// questions
@@ -141,14 +143,18 @@ class MeetingDetailsController extends GetxController
     } catch (_) {
       attendances.value = meeting.value.attendances;
     }
+    if(result.$2==null){
+      myAttendance.value = attendances.firstWhereOrNull((e)=>e.userId==app.user.value.id);
+    }
 
     /// Excused Comments
-    excusedCommentsPresenceStatus.text = myAttendance.value.comments ?? '';
+    excusedCommentsPresenceStatus.text = myAttendance.value?.comments ?? '';
 
     /// Closed Meeting
     isClosedMeeting.value = meeting.value.isClosed;
-    isVoted.value =
-        myAttendance.value.isVote || myAttendance.value.isVoteDelegate;
+    if(myAttendance.value!=null) {
+      isVoted.value = myAttendance.value!.isVote || myAttendance.value!.isVoteDelegate;
+    }
 
     /// Upcoming Meeting
     isUpcomingMeeting.value =
@@ -194,7 +200,7 @@ class MeetingDetailsController extends GetxController
 
             String? message = await DatabaseX.confirmAttendance(
               form: ConfirmAttendanceFormX(
-                attendanceId: myAttendance.value.id,
+                attendanceId: myAttendance.value?.id??'',
                 status: status,
                 comments: selectedPresenceStatus.value == 1
                     ? excusedCommentsPresenceStatus.text
@@ -205,15 +211,16 @@ class MeetingDetailsController extends GetxController
               ),
             );
 
-            myAttendance.value.status = status;
+            myAttendance.value?.status = status;
             if (selectedPresenceStatus.value == 1) {
-              myAttendance.value.comments = excusedCommentsPresenceStatus.text;
+              myAttendance.value?.comments = excusedCommentsPresenceStatus.text;
             }
             if (selectedPresenceStatus.value == 2) {
               myDelegate.value =
                   DelegateX.local(delegated: selectedDelegatedUser.value);
             }
             isEditPresenceStatus.value = false;
+            checkIsOngoing();
 
             ToastX.success(
               message: message ?? 'Your presence status has been updated',
@@ -381,31 +388,31 @@ class MeetingDetailsController extends GetxController
 
   bool get isShowPresenceStatus =>
       isOngoingMeeting.isFalse ||
-      myAttendance.value.status != AttendanceStatusStatusX.present;
+      myAttendance.value?.status != AttendanceStatusStatusX.present;
   bool get isShowNowOngoing =>
       isOngoingMeeting.isTrue &&
-      myAttendance.value.status == AttendanceStatusStatusX.present;
+      myAttendance.value?.status == AttendanceStatusStatusX.present;
   bool get isShowPresenceStatusButtons =>
-      (myAttendance.value.status == AttendanceStatusStatusX.absent ||
+      (myAttendance.value?.status == AttendanceStatusStatusX.absent ||
           isEditPresenceStatus.isTrue) &&
       isClosedMeeting.isFalse;
   bool get isShowPresentCardPresenceStatus =>
-      myAttendance.value.status == AttendanceStatusStatusX.present &&
+      myAttendance.value?.status == AttendanceStatusStatusX.present &&
       isClosedMeeting.isFalse &&
       isEditPresenceStatus.isFalse;
   bool get isShowDelegatedToSomeoneElsePresenceStatus =>
-      myAttendance.value.status == AttendanceStatusStatusX.byDelegated &&
+      myAttendance.value?.status == AttendanceStatusStatusX.byDelegated &&
       isEditPresenceStatus.isFalse;
   bool get isShowMeetingAttendedPresenceStatus =>
-      myAttendance.value.status == AttendanceStatusStatusX.present &&
+      myAttendance.value?.status == AttendanceStatusStatusX.present &&
       isClosedMeeting.isTrue &&
       isEditPresenceStatus.isFalse;
   bool get isShowAbsentFromMeetingPresenceStatus =>
-      myAttendance.value.status == AttendanceStatusStatusX.absent &&
+      myAttendance.value?.status == AttendanceStatusStatusX.absent &&
       isClosedMeeting.isTrue &&
       isEditPresenceStatus.isFalse;
   bool get isShowNonAttendanceMeetingPresenceStatus =>
-      myAttendance.value.status == AttendanceStatusStatusX.excused &&
+      myAttendance.value?.status == AttendanceStatusStatusX.excused &&
       isEditPresenceStatus.isFalse;
   bool get isDisableButtonOfSavePresenceStatus =>
       selectedPresenceStatus.value == 2 && selectedDelegatedUser.value == null;
@@ -447,7 +454,7 @@ class MeetingDetailsController extends GetxController
   }
 
   checkIsShowEditPresenceStatus() {
-    if (myAttendance.value.status != AttendanceStatusStatusX.absent &&
+    if (myAttendance.value?.status != AttendanceStatusStatusX.absent &&
         isClosedMeeting.isFalse) {
       isShowButtonEditPresenceStatus.value = true;
     } else {

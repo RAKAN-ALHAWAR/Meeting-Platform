@@ -3,7 +3,7 @@
 
 name: meeting
 description: "A new Flutter project."
-version: 1.0.0+2
+version: 1.0.1+10
 
 #====================================================================
 # Flutter Version
@@ -82,7 +82,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   flutter_native_splash: any
 
 #====================================================================
@@ -115,6 +115,7 @@ flutter:
     # pubspec.yaml: It must be present to access package data, application name and version
     - pubspec.yaml
     - assets/images/
+    - assets/images/flags/
     - assets/images/logos/
     - assets/images/empty/
     - assets/images/splash/

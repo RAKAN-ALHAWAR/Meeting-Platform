@@ -30,6 +30,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   /// Profile Image
                   ContainerX(
@@ -54,7 +55,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                             width: 82,
                             imageUrl:
                                 controller.app.user.value.imageUrl ?? "",
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
 
                             /// Empty State
                             empty: Center(
@@ -85,18 +86,20 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                   /// Name & Job Title
                   GetBuilder<AppControllerX>(
                     builder: (controller) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextX(
                           key: Key(controller.user.value.name),
                           controller.user.value.name,
                           style: TextStyleX.titleLarge,
+                          textAlign: TextAlign.center,
                         ),
                         if (controller.user.value.jobTitle != null)
                           TextX(
                             controller.user.value.jobTitle!,
                             style: TextStyleX.supTitleLarge,
                             fontWeight: FontWeight.w500,
+                            textAlign: TextAlign.center,
                           ).marginOnly(top: 2),
                       ],
                     ).fadeAnimation100,

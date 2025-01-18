@@ -38,7 +38,7 @@ class NonAttendanceMeetingPresenceStatus
 
         /// Reason for not attending
         TextX(
-          controller.myAttendance.value.comments ?? '',
+          controller.myAttendance.value?.comments ?? '',
           style: TextStyleX.titleSmall,
           color: ColorX.grey.shade500,
         ).fadeAnimation350,

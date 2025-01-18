@@ -43,8 +43,6 @@ class ConsoleUtilX {
       return ConsoleAnsiColorX.cyan;
       case ConsoleColorStatus.white:
         return ConsoleAnsiColorX.white;
-      default:
-        return '';
-    }
+      }
   }
 }

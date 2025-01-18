@@ -78,11 +78,12 @@ class MeetingMinutesView extends GetView<MeetingMinutesController> {
                   const SizedBox(height: 16),
                   Row(
                     children: [
+                      if(controller.myAttendance.value!=null)
                       Flexible(
                         child: AbsorbPointer(
-                          absorbing: controller.meeting.value.isCloseRecord || controller.myAttendance.value.signature!=null,
+                          absorbing: controller.meeting.value.isCloseRecord || controller.myAttendance.value!.signature!=null,
                           child: Opacity(
-                            opacity: controller.meeting.value.isCloseRecord || controller.myAttendance.value.signature!=null
+                            opacity: controller.meeting.value.isCloseRecord || controller.myAttendance.value!.signature!=null
                                 ? 0.5
                                 : 1,
                             child: ButtonStateX(
@@ -93,6 +94,7 @@ class MeetingMinutesView extends GetView<MeetingMinutesController> {
                           ),
                         ),
                       ),
+                      if(controller.myAttendance.value!=null)
                       const SizedBox(width: 8),
                       Flexible(
                         child: AbsorbPointer(

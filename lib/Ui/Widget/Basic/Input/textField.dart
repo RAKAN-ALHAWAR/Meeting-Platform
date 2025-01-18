@@ -88,11 +88,12 @@ class _TextFieldXState extends State<TextFieldX> {
   void initState() {
     passwordVisible = widget.isPassword;
     super.initState();
-    if(widget.onChangedFocus!=null){
-      _focusNode.addListener(() async{
-       await widget.onChangedFocus!(_focusNode.hasFocus);
-      });
-    }
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus && widget.textInputAction == TextInputAction.done) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      }
+      widget.onChangedFocus?.call(_focusNode.hasFocus);
+    });
   }
 
   @override
@@ -128,7 +129,14 @@ class _TextFieldXState extends State<TextFieldX> {
             style: TextStyleX.titleSmall.copyWith(color: widget.colorText??(widget.onlyRead??false?ColorX.grey.shade400:null)),
             autofocus: widget.autofocus,
             focusNode: _focusNode,
-            onEditingComplete: ()=>widget.onEditingComplete?.call(''),
+            onEditingComplete: (){
+              widget.onEditingComplete?.call(widget.controller.text);
+              if (widget.textInputAction == TextInputAction.next) {
+                FocusScope.of(context).nextFocus();
+              } else if (widget.textInputAction == TextInputAction.done) {
+                FocusScope.of(context).unfocus();
+              }
+              },
             onChanged: (text) {
               if(widget.textInputType==TextInputType.number) {
                 String convertedText = text.arabicToEnglishNumbers;

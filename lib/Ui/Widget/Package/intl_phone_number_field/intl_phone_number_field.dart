@@ -1,17 +1,17 @@
 // ignore_for_file: non_constant_identifier_names
 
-library intl_phone_number_field;
+library;
 
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:meeting/UI/Widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:get/get.dart';
 
 import '../../../../Config/config.dart';
+import '../../../../UI/Widget/widget.dart';
 import 'models/country_code_model.dart';
 import 'models/country_config.dart';
 import 'models/dialog_config.dart';
@@ -35,6 +35,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
   final CountryConfig countryConfig;
   final PhoneConfig phoneConfig;
   final int initCountry;
+  final bool isActiveError;
   final dynamic Function(IntPhoneNumber number)? onInputChanged;
   final double betweenPadding;
   final MaskedInputFormatter? formatter;
@@ -55,6 +56,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
       this.formatter,
       this.validate,
       this.inactive = false,
+      this.isActiveError = false,
       this.isShowCountryCode = true,
       this.isDisableChangeCountryCode = false,
       DialogConfig? dialogConfig,
@@ -203,6 +205,7 @@ class _InternationalPhoneNumberInputState
             hint: widget.phoneConfig.hintText ?? "",
             controller: widget.controller,
             textInputAction: widget.phoneConfig.textInputAction,
+            // isActiveError:widget.isActiveError,
             label: widget.phoneConfig.labelText,
             textInputType: TextInputType.number,
             inputFormatters: [

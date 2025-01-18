@@ -26,7 +26,9 @@ class SignaturesController extends GetxController {
         return signature;
       } else {
         var url = FirebaseRemoteConfigServiceX.getString('base_url');
-        int endIndex = url.indexOf('.com');
+        RegExp regExp = RegExp(r'\.(com|sa)');
+        Match? match = regExp.firstMatch(url);
+        int endIndex = match != null ? match.start : -1;
         if (endIndex != -1) {
           return '${url.substring(0, endIndex + 4)}/$signature';
         } else {

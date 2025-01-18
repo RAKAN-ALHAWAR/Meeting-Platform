@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../../../../Data/Enum/attendance_status_status.dart';
 import '../../../controller/controller.dart';
 import 'attachmentsSection.dart';
 import 'descriptionAndAgendaAndAttendances.dart';
@@ -15,11 +16,16 @@ class DetailsSection extends GetView<MeetingDetailsController> {
         return Column(
           children: [
             /// Presence Status
-            if (controller.isShowPresenceStatus) const PresenceStatus(),
+            if (controller.myAttendance.value!=null && (controller.isOngoingMeeting.isFalse ||
+                controller.myAttendance.value?.status != AttendanceStatusStatusX.present))
+              const PresenceStatus(),
             /// Now Ongoing
-            if (controller.isShowNowOngoing) const MeetingNowOngoing(),
+            if (controller.myAttendance.value!=null && controller.isOngoingMeeting.isTrue &&
+                controller.myAttendance.value?.status == AttendanceStatusStatusX.present)
+              const MeetingNowOngoing(),
 
             /// Space
+            if(controller.myAttendance.value!=null)
             const SizedBox(height: 16),
 
             /// Description & Agenda & Attendances

@@ -40,7 +40,7 @@ class MeetingMinutesController extends GetxController {
   RxBool isLoading = false.obs;
   late Rx<MeetingX> meeting;
   late Rx<File> file;
-  late Rx<AttendanceX> myAttendance;
+  Rx<AttendanceX?> myAttendance = Rx(null);
   RxList<AttendanceX> attendances = <AttendanceX>[].obs;
   RxList<String> recommendations = <String>[].obs;
   RxList<String> permissions = <String>[].obs;
@@ -62,9 +62,13 @@ class MeetingMinutesController extends GetxController {
     /// Get Meeting & Attendance & Permissions Data
     var result = await DatabaseX.getMeetingDetails(id: id);
     meeting = result.$1.obs;
-    myAttendance = result.$2.obs;
+    myAttendance.value = result.$2;
+
     permissions = result.$3.obs;
     attendances.value = meeting.value.attendances;
+    if(myAttendance.value==null){
+      myAttendance.value = attendances.firstWhereOrNull((e)=>e.userId==app.user.value.id);
+    }
     for (var x in meeting.value.attendances
         .where((element) => element.signature != null)) {
       signaturesImages[x.id] = await networkImage(getUrl(x.signature!)!);

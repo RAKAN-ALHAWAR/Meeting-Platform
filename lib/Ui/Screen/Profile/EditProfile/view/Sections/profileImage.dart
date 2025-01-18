@@ -33,7 +33,7 @@ class ProfileImageSectionX extends GetView<EditProfileController> {
                         : controller.app.user.value.imageUrl ?? "",
                     height: 100,
                     width: 100,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                     isFile: controller.image != null,
                     failed: Center(
                       child: TextX(
@@ -45,8 +45,8 @@ class ProfileImageSectionX extends GetView<EditProfileController> {
                     ),
                   ),
                 ),
-              ).fadeAnimation200,
-            ),
+              ),
+            ).fadeAnimation200,
           ),
 
           /// Upload Icon

@@ -31,10 +31,7 @@ class ErrorView extends StatelessWidget {
 
         case ErrorTypeStatusX.unknown:
           return Icons.report_problem_rounded;
-
-        default:
-          return Icons.report_problem_rounded;
-      }
+        }
     }
     return Center(
       child: Padding(

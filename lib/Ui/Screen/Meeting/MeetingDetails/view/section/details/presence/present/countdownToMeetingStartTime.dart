@@ -31,16 +31,6 @@ class CountdownToMeetingStartTime extends GetView<MeetingDetailsController> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /// Hours
-                CountdownCardX(
-                  title: 'Hour',
-                  countdown: controller.hours.value,
-                ),
-                const SizedBox(
-                  height: 55,
-                  child: Center(child: TextX(" : ")),
-                ),
-
                 /// Days
                 CountdownCardX(
                   title: 'Day',
@@ -50,7 +40,15 @@ class CountdownToMeetingStartTime extends GetView<MeetingDetailsController> {
                   height: 55,
                   child: Center(child: TextX(" : ")),
                 ),
-
+                /// Hours
+                CountdownCardX(
+                  title: 'Hour',
+                  countdown: controller.hours.value,
+                ),
+                const SizedBox(
+                  height: 55,
+                  child: Center(child: TextX(" : ")),
+                ),
                 /// Minutes
                 CountdownCardX(
                   title: 'Minute',

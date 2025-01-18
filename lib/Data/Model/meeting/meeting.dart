@@ -76,7 +76,7 @@ class MeetingX {
   final String? googleCalendarEventId;
 
   /// معرف المستخدم الذي انشئ الاجتماع
-  final int creatorId;
+  final int? creatorId;
   /// المستخدم الذي انشئ الاجتماع
   final UserX? created;
   /// معرف ادمن الاجتماع
@@ -147,7 +147,7 @@ class MeetingX {
     this.updatedAt,
     this.deletedAt,
     this.googleCalendarEventId,
-    required this.creatorId,
+    this.creatorId,
     this.created,
     this.adminId,
     this.admin,
@@ -236,7 +236,7 @@ class MeetingX {
           updatedAt: json[NameX.updatedAt].toDateTimeNullableX,
           deletedAt: json[NameX.deletedAt].toDateTimeNullableX,
           googleCalendarEventId: json[NameX.googleCalendarEventId].toStrNullableX,
-          creatorId: json[NameX.creator].toIntX,
+          creatorId: json[NameX.creator].toIntNullableX,
           created: json[NameX.createdBy].toFromJsonNullableX((x)=>UserX.fromJson(x,'')),
           adminId: json[NameX.adminId].toIntNullableX,
           admin: json[NameX.admin].toFromJsonNullableX((x)=>UserX.fromJson(x,'')),

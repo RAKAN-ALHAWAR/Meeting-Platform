@@ -29,26 +29,26 @@ class MiniMeetingX {
   final String? locationOnlineUrl;
   final String? locationLocale;
   factory MiniMeetingX.fromJson(Map<String, dynamic> json) {
-    return ModelUtilX.checkFromJson(
-      json,
-      (json) => MiniMeetingX(
-        id: json[NameX.id].toIntX,
-        title: json[NameX.title].toStrX,
-        number: json[NameX.number].toIntNullableX,
-        date: json[NameX.date].toDateTimeNullableX,
-        startAt: json[NameX.startAt].toTimeOfDayNullableX,
-        endAt: json[NameX.endAt].toTimeOfDayNullableX,
-        place: MeetingPlaceStatusX.values.firstWhereOrNull(
-          (x) => x.name == json[NameX.place].toStrX.toLowerCase(),
+      return ModelUtilX.checkFromJson(
+        json,
+            (json) => MiniMeetingX(
+          id: json[NameX.id].toIntX,
+          title: json[NameX.title].toStrX,
+          number: json[NameX.number].toIntNullableX,
+          date: json[NameX.date].toDateTimeNullableX,
+          startAt: json[NameX.startAt].toTimeOfDayNullableX,
+          endAt: json[NameX.endAt].toTimeOfDayNullableX,
+          place: MeetingPlaceStatusX.values.firstWhereOrNull(
+                (x) => x.name == json[NameX.place].toString().toLowerCase(),
+          ),
+          locationOnlineUrl: json[NameX.link].toStrNullableX,
+          locationLocale: json[NameX.locale].toStrNullableX,
         ),
-        locationOnlineUrl: json[NameX.link].toStrNullableX,
-        locationLocale: json[NameX.locale].toStrNullableX,
-      ),
-      requiredDataKeys: [
-        NameX.id,
-        NameX.title,
-      ],
-    );
+        requiredDataKeys: [
+          NameX.id,
+          NameX.title,
+        ],
+      );
   }
 
   Map<String, dynamic> toJson() {

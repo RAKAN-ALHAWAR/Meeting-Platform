@@ -22,7 +22,7 @@ class DashboardX {
           (key, value) => MapEntry(key.toString(), value),
     )).toList());
 
-    List<Map<String, dynamic>> meetingsJson = List<Map<String, dynamic>>.from((json[NameX.newMeeting] is List ? json[NameX.newMeeting] : [])
+    List<Map<String, dynamic>> meetingsJson = List<Map<String, dynamic>>.from((json[NameX.newMeeting]?[NameX.data] is List ? json[NameX.newMeeting][NameX.data] : [])
         .map((item) => (item as Map).map(
           (key, value) => MapEntry(key.toString(), value),
     )).toList());

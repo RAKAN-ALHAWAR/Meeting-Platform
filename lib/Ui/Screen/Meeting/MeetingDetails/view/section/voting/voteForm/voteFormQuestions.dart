@@ -17,7 +17,7 @@ class VoteFormQuestions extends GetView<MeetingDetailsController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Use ListView.builder for better performance
-            ListView.builder(
+            GetBuilder<MeetingDetailsController>(builder: (controller) => ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: controller.questions.length,
@@ -52,7 +52,7 @@ class VoteFormQuestions extends GetView<MeetingDetailsController> {
                   ],
                 ).fadeAnimation450;
               },
-            ),
+            ),),
 
             const SizedBox(height: 12),
 
@@ -79,9 +79,9 @@ class VoteFormQuestions extends GetView<MeetingDetailsController> {
       label: answer.text,
       onChanged: (val) {
         if (val != null) {
-          controller.myAnswersIDs
-              .removeWhere((element) => element.$1 == question.id);
+          controller.myAnswersIDs.removeWhere((element) => element.$1 == question.id);
           controller.myAnswersIDs.add((question.id, val));
+          controller.update();
         }
       },
     );
