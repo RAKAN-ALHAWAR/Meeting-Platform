@@ -16,11 +16,16 @@ class FlagView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isFlat
-        ? CountryFlag.fromCountryCode(
+        ? (countryCodeModel.code.toUpperCase()=='SY'?
+        ClipRRect(
+          borderRadius: BorderRadius.circular(2),
+          child: Image.asset('assets/images/flags/sy.png',width: size * 1.17,),
+        )
+        :CountryFlag.fromCountryCode(
             countryCodeModel.code.toUpperCase(),
             width: size * 1.17,
-            borderRadius: 40,
-          )
+            borderRadius: 2,
+          ))
         : Text(
             countryCodeModel.code.toUpperCase().replaceAllMapped(
                 RegExp(r'[A-Z]'),
