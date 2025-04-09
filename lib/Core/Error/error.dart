@@ -16,10 +16,10 @@ class ErrorX implements Exception {
   late String title;
   late String message;
   int errorCode;
-  late String originalError;
-  Map<String, dynamic> details;
-  ErrorSeverityStatusX severity;
   late ErrorTypeStatusX errorType;
+  ErrorSeverityStatusX severity;
+  Map<String, dynamic> details;
+  late String originalError;
   StackTrace? stackTrace;
 
   ErrorX({

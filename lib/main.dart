@@ -62,6 +62,13 @@ class MyApp extends StatelessWidget {
         );
       }),
 
+      /// Stop font enlargement according to the user's device font size
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+          child: child!,
+        );
+      },
       /// Routes
       getPages: RouteListX.routes,
       initialRoute: RouteNameX.loading,

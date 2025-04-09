@@ -16,17 +16,22 @@ class DetailsSection extends GetView<MeetingDetailsController> {
         return Column(
           children: [
             /// Presence Status
-            if (controller.myAttendance.value!=null && (controller.isOngoingMeeting.isFalse ||
-                controller.myAttendance.value?.status != AttendanceStatusStatusX.present))
+            if (controller.myAttendance.value != null &&
+                (controller.isOngoingMeeting.isFalse ||
+                    controller.myAttendance.value?.status !=
+                        AttendanceStatusStatusX.present))
               const PresenceStatus(),
+
             /// Now Ongoing
-            if (controller.myAttendance.value!=null && controller.isOngoingMeeting.isTrue &&
-                controller.myAttendance.value?.status == AttendanceStatusStatusX.present)
+            if (controller.myAttendance.value != null &&
+                controller.isOngoingMeeting.isTrue &&
+                controller.myAttendance.value?.status ==
+                    AttendanceStatusStatusX.present)
               const MeetingNowOngoing(),
 
             /// Space
-            if(controller.myAttendance.value!=null)
-            const SizedBox(height: 16),
+            if (controller.myAttendance.value != null)
+              const SizedBox(height: 16),
 
             /// Description & Agenda & Attendances
             const DescriptionAndAgendaAndAttendances(),

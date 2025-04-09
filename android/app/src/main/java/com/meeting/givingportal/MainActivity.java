@@ -1,4 +1,4 @@
-package com.meeting.givingportal;
+package com.meeting.rakanalhawar;
 
 import io.flutter.embedding.android.FlutterActivity;
 

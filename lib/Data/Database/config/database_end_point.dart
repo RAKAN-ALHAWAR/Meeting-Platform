@@ -10,6 +10,9 @@ class DBEndPointX {
 
   // static final String postSignUp = '${mainAPI}auth/signup';
   static final String postLogin = '${mainAPI}auth/login';
+  static final String postLoginByPhone = '${mainAPI}auth/mobile/login';
+  static final String postPhoneOtp = '${mainAPI}auth/mobile/verification';
+  static final String postLoginByGoogle = '${mainAPI}auth/google/login';
   static final String postForgotPassword = '${mainAPI}auth/password/email';
   static final String postForgotPasswordOtpCheckCode = '${mainAPI}auth/password/check-code';
   static final String postForgotPasswordReset = '${mainAPI}auth/password/update-password';
@@ -71,6 +74,7 @@ class DBEndPointX {
   static final String getAllMyMeetings = '${mainAPI}admin/meetings/my/meeting';
   static final String getAllNewMeetings = '${mainAPI}dashboard/employee';
   static final String postAddSignatureMeetingMinutes = '${mainAPI}admin/attendance/signatures/{id}/add';
+  static final String putChangeStatusCheckTask = '${mainAPI}meetings/agenda/recommendations/{id}';
 
   // ============================================================================
   // Attendances
@@ -93,6 +97,7 @@ class DBEndPointX {
   // Delegate
 
   static final String getAllDelegates = '${mainAPI}delegates';
+  static final String getAllMyDelegates = '${mainAPI}delegates/my';
   static final String getDelegateDetails = '${mainAPI}delegates/{id}';
   static final String postConfirmDelegate = '${mainAPI}delegates/confirm/{id}';
 

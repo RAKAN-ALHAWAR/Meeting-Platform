@@ -19,4 +19,7 @@ class ImageX {
 
   /// Empty
   static const String delegationEmpty = '${_path}empty/delegation-empty.png';
+
+  /// Auth
+  static const String google = '${_path}auth/google.png';
 }

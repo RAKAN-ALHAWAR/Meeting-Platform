@@ -7,6 +7,7 @@ import 'package:meeting/Core/Extension/convert/convert.dart';
 import 'package:meeting/Ui/Animation/fade/fade_animation.dart';
 import 'package:meeting/Ui/Widget/Custom/Other/meetingState.dart';
 import '../../../../../../../Config/Translation/translation.dart';
+import '../../../../../../../Data/Enum/repetition_type_status.dart';
 import '../../../../../../../UI/Widget/widget.dart';
 import '../../../controller/controller.dart';
 
@@ -39,15 +40,39 @@ class MeetingBasicDataSection extends GetView<MeetingDetailsController> {
                 size: 20,
               ),
               const SizedBox(width: 10),
-              TextX(
-                DateFormat(
-                  'EEEE, d MMMM yyyy',
-                  TranslationX.getLanguageCode,
-                ).format(controller.meeting.value.date),
-                color: ColorX.grey.shade500,
-                fontWeight: FontWeight.w400,
-                size: 14,
-              ),
+              if (controller.meeting.value.repetitionType ==
+                  RepetitionTypeStatusX.once)
+                TextX(
+                  DateFormat('EEEE, d MMMM yyyy', TranslationX.getLanguageCode)
+                      .format(controller.meeting.value.date),
+                  color: ColorX.grey.shade500,
+                  fontWeight: FontWeight.w400,
+                  size: 14,
+                ),
+              if (controller.meeting.value.repetitionType ==
+                  RepetitionTypeStatusX.daily)
+                TextX(
+                  '${controller.meeting.value.repetition.days.isEmpty ? 'Daily'.tr : 'Daily except'.tr} ${controller.meeting.value.repetition.days.join(', ')}',
+                  color: ColorX.grey.shade500,
+                  fontWeight: FontWeight.w400,
+                  size: 14,
+                ),
+              if (controller.meeting.value.repetitionType ==
+                  RepetitionTypeStatusX.weekly)
+                TextX(
+                  '${controller.meeting.value.repetition.weekDays.isEmpty ? 'Weekly every day'.tr : 'Weekly every'.tr} ${controller.meeting.value.repetition.weekDays.join(', ')}',
+                  color: ColorX.grey.shade500,
+                  fontWeight: FontWeight.w400,
+                  size: 14,
+                ),
+              if (controller.meeting.value.repetitionType ==
+                  RepetitionTypeStatusX.monthly)
+                TextX(
+                  '${'Monthly. Next meeting'.tr}: ${DateFormat('EEEE, d MMMM', TranslationX.getLanguageCode).format(controller.meeting.value.date)}',
+                  color: ColorX.grey.shade500,
+                  fontWeight: FontWeight.w400,
+                  size: 14,
+                ),
             ],
           ).fadeAnimation150,
 

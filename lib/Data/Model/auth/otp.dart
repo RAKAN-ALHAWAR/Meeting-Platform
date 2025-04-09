@@ -1,5 +1,3 @@
-part of '../../data.dart';
-
 class OtpX {
   OtpX({
     this.email,
@@ -19,14 +17,4 @@ class OtpX {
   late bool isPhone;
   late bool isEdit;
 
-  factory OtpX.fromJson(Map<String, dynamic> json) {
-    return OtpX(
-      email: json[NameX.email],
-      phone: (json[NameX.phone]??0).toIntX,
-      countryCode: json[NameX.countryCode],
-      isLogin: json[NameX.isLogin] ?? false,
-      isPhone: json[NameX.isPhone] ?? false,
-      isEdit: json[NameX.isEdit] ?? false,
-    );
-  }
 }

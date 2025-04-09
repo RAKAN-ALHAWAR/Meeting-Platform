@@ -13,6 +13,7 @@ import '../Data/Model/User/user.dart';
 import '../Data/data.dart';
 import '../UI/Widget/widget.dart';
 import 'Helper/http/http.dart';
+import 'Service/onesignalService.dart';
 import 'Util/info.dart';
 part 'Controller/App/app_controller.dart';
 part 'Util/function.dart';
@@ -29,10 +30,12 @@ part 'Helper/http_overrides.dart';
 /// containing all internal processors and general functions
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class CoreX{
-  static init() async{
+class CoreX {
+  static init() async {
     await InfoUtilX.init();
     await HttpX.init();
+    await OnesignalServiceX.init();
+    // await FirebaseNotificationServiceX.init();
     /// Here codes are added to configure anything within this section when the application starts
   }
 }

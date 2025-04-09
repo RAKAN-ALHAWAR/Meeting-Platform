@@ -1,17 +1,20 @@
 import 'package:meeting/Data/data.dart';
 
-class ForgetPasswordOtpCheckCodeFormX {
-  final String email;
+class PhoneOtpCheckCodeFormX {
+  final int phone;
+  final int countryCode;
   final String otpCode;
 
-  ForgetPasswordOtpCheckCodeFormX({
-    required this.email,
+  PhoneOtpCheckCodeFormX({
+    required this.phone,
+    required this.countryCode,
     required this.otpCode,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      NameX.email: email,
+      NameX.phone: phone.toString(),
+      NameX.countryCode: countryCode.toString(),
       NameX.code: otpCode,
     };
   }

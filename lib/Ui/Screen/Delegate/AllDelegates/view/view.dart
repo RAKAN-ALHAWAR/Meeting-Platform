@@ -74,6 +74,7 @@ class AllDelegatesView extends GetView<AllDelegatesController> {
                 itemBuilder: (data, index) {
                   return DelegateCardX(
                     delegate: data,
+                    isToMe:controller.isToMe.value,
                     onAccept: controller.onAccept,
                     onReject: controller.onReject,
                   ).fadeAnimation100;

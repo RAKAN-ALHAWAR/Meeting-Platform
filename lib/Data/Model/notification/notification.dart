@@ -26,7 +26,6 @@ class NotificationX {
   final DateTime? updatedAt;
 
   factory NotificationX.fromJson(Map<String, dynamic> json) {
-    /// TODO: تعديل الموديل من أجل اكتشاف نوع الصحيح للاشعار ونقل المستخدم للمكان الصحيح
     Map<String, Object?> notificationDataXJson = Map<String, Object?>.from(json[NameX.data] ?? {});
     return ModelUtilX.checkFromJson(
       json,

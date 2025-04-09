@@ -22,7 +22,7 @@ class ButtonX extends StatelessWidget {
   ButtonX({
     required this.onTap,
     this.text,
-    colorButton,
+    Color? colorButton,
     this.disabled = false,
     this.iconData,
     this.icon,

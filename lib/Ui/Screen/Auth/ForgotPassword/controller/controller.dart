@@ -6,6 +6,7 @@ import 'package:meeting/UI/Widget/widget.dart';
 
 import '../../../../../Config/config.dart';
 import '../../../../../Core/Error/error.dart';
+import '../../../../../Data/Model/auth/otp.dart';
 import '../../../../../Data/data.dart';
 
 class ForgotPasswordController extends GetxController {
@@ -46,8 +47,13 @@ class ForgotPasswordController extends GetxController {
             const Duration(seconds: StyleX.successButtonSecond),
           );
 
-          Get.toNamed(RouteNameX.otp,arguments: email.text);
-
+          /// create otp object
+          OtpX otp = OtpX(
+            email: email.text.trim(),
+            isLogin: true,
+            isPhone: false,
+          );
+          Get.toNamed(RouteNameX.otp, arguments: otp);
         } catch (e) {
           error.value = e.toErrorX;
           error.value!.log();

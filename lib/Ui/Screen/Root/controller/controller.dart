@@ -26,5 +26,6 @@ class RootController extends GetxController {
   }
 
   openHome() => onItemSelected(0);
+  openDelegates() => onItemSelected(2);
 
 }

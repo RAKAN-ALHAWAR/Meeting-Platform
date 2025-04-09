@@ -44,6 +44,8 @@ class NotificationsView extends GetView<NotificationsController> {
                   itemBuilder: (context, index) {
                     return NotificationCard(
                       notification: controller.notifications[index],
+                      onAcceptDelegate: controller.onAcceptDelegate,
+                      onRejectDelegate: controller.onRejectDelegate,
                     ).fadeAnimation200;
                   },
                 );

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meeting/Core/Error/error.dart';
+import 'package:meeting/Core/Extension/convert/convert.dart';
 import 'package:meeting/Data/Form/attendance/confirm_attendance.dart';
 import 'package:meeting/Data/Form/vote/vote.dart';
 import 'package:meeting/Data/Form/vote/vote_delegate.dart';
@@ -21,6 +22,7 @@ import '../../../../../Data/Enum/ability_status.dart';
 import '../../../../../Data/Enum/attendance_status_status.dart';
 import '../../../../../Data/Form/suggestion/add_meeting_suggestion.dart';
 import '../../../../../Data/Model/attachment/attachment.dart';
+import '../../../../../Data/Model/dashboard/task.dart';
 import '../../../../../Data/Model/suggestion/suggestion.dart';
 import '../../../../../UI/Widget/widget.dart';
 import '../../../../ScreenSheet/Delegate/SelectionDelegateUser/view/selectionDelegateUserSheet.dart';
@@ -37,6 +39,8 @@ class MeetingDetailsController extends GetxController
 
   /// Get Meeting Id
   String id = Get.arguments.toString();
+  bool isOpenTasksByDefault = Get.parameters[NameX.task].toBoolDefaultX(false);
+  bool isOpenVoteByDefault = Get.parameters[NameX.vote].toBoolDefaultX(false);
 
   /// Main variables
   late Rx<MeetingX> meeting;
@@ -57,6 +61,7 @@ class MeetingDetailsController extends GetxController
   RxBool isOngoingMeeting = false.obs;
   RxBool isClosedMeeting = false.obs;
   RxBool isUpcomingMeeting = false.obs;
+  RxBool isShowMeetingLink = false.obs;
   bool isDelegate = false;
   bool _isUpdatingData = false;
 
@@ -110,6 +115,13 @@ class MeetingDetailsController extends GetxController
     startCountdown(meeting.value.startFullDate);
     startStatusUpdate();
     startPeriodicDataUpdate();
+    if(isOpenTasksByDefault){
+      tabsIndex.value=2;
+      tabs.value=2;
+    }else if(meeting.value.isVote && isOpenVoteByDefault){
+      tabsIndex.value=3;
+      tabs.value=3;
+    }
   }
 
   Future getMainData() async {
@@ -364,8 +376,13 @@ class MeetingDetailsController extends GetxController
     }
   }
 
-  onChangeTask(bool val) async {
+  onChangeTask(TaskX task) async {
     /// TODO: اضافة ربط انجاز المهام بقاعدة البيانات
+    // try{
+    //   await DatabaseX.changeStatusCheckTask(task.id.toString());
+    // }catch(e){
+    //   ToastX.error(message: e.toString());
+    // }
   }
 
   bool allQuestionsHaveAnswers() {
@@ -516,7 +533,9 @@ class MeetingDetailsController extends GetxController
       return attachment.path;
     } else {
       var url = FirebaseRemoteConfigServiceX.getString('base_url');
-      int endIndex = url.indexOf('.com');
+      RegExp regExp = RegExp(r'\.(com|sa)');
+      Match? match = regExp.firstMatch(url);
+      int endIndex = match != null ? match.start : -1;
       if (endIndex != -1) {
         return '${url.substring(0, endIndex + 4)}/${attachment.path}';
       } else {
@@ -543,6 +562,7 @@ class MeetingDetailsController extends GetxController
       minutes.value = 0;
       seconds.value = 0;
       isUpcomingMeeting.value = false;
+      isShowMeetingLink.value = false;
       return;
     }
 
@@ -550,6 +570,8 @@ class MeetingDetailsController extends GetxController
     hours.value = difference.inHours % 24;
     minutes.value = difference.inMinutes % 60;
     seconds.value = difference.inSeconds % 60;
+
+    isShowMeetingLink.value = difference.inHours <= 1;
   }
 
   void startStatusUpdate() {
@@ -578,7 +600,7 @@ class MeetingDetailsController extends GetxController
       if (_isUpdatingData) return;
       _isUpdatingData = true;
       try {
-        await getMainData();
+        await getData();
       } catch (_) {
       } finally {
         _isUpdatingData = false;

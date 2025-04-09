@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:meeting/Config/Translation/translation.dart';
 import 'package:meeting/Core/Extension/convert/convert.dart';
+import 'package:meeting/Data/Enum/repetition_type_status.dart';
 import 'package:meeting/Data/Model/meeting/meeting.dart';
 import 'package:meeting/Ui/Widget/Custom/Other/meetingState.dart';
 
@@ -37,6 +38,7 @@ class MeetingCardX extends StatelessWidget {
                     maxLines: 2,
                     fontWeight: FontWeight.w700,
                   ).marginSymmetric(vertical: 10),
+                  const SizedBox(height: 4),
                   FittedBox(
                     child: Row(
                       children: [
@@ -46,12 +48,37 @@ class MeetingCardX extends StatelessWidget {
                           size: 20,
                         ),
                         const SizedBox(width: 4),
-                        TextX(
+                        if(meeting.repetitionType==RepetitionTypeStatusX.once)
+                          TextX(
                             DateFormat('EEEE, d MMMM yyyy',
-                                    TranslationX.getLanguageCode)
+                                TranslationX.getLanguageCode)
                                 .format(meeting.date),
-                            style: TextStyleX.supTitleMedium),
-                        const SizedBox(width: 12),
+                            style: TextStyleX.supTitleMedium,
+                          ),
+                        if(meeting.repetitionType==RepetitionTypeStatusX.daily)
+                          TextX(
+                            '${meeting.repetition.days.isEmpty?'Daily'.tr:'Daily except'.tr} ${meeting.repetition.days.join(', ')}',
+                            style: TextStyleX.supTitleMedium,
+                          ),
+                        if(meeting.repetitionType==RepetitionTypeStatusX.weekly)
+                          TextX(
+                            '${meeting.repetition.weekDays.isEmpty?'Weekly every day'.tr:'Weekly every'.tr} ${meeting.repetition.weekDays.join(', ')}',
+                            style: TextStyleX.supTitleMedium,
+                          ),
+                        if(meeting.repetitionType==RepetitionTypeStatusX.monthly)
+                          TextX(
+                            '${'Monthly. Next meeting'.tr}: ${DateFormat('EEEE, d MMMM',
+                                TranslationX.getLanguageCode)
+                                .format(meeting.date)}',
+                            style: TextStyleX.supTitleMedium,
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  FittedBox(
+                    child: Row(
+                      children: [
                         Icon(
                           Iconsax.clock,
                           color: ColorX.grey.shade400,

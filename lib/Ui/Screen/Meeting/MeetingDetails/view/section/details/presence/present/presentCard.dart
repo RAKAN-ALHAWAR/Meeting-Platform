@@ -24,6 +24,8 @@ class PresentCardPresenceStatus extends GetView<MeetingDetailsController> {
           /// Countdown
           if (controller.isUpcomingMeeting.isTrue)
             const CountdownToMeetingStartTime().fadeAnimation300,
+
+
         ],
       ),
     );

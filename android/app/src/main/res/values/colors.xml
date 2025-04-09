@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<meta-data
-    android:name="com.google.firebase.messaging.default_notification_color"
-    android:resource="@color/your_notification_color"/>
+<resources>
+    <!-- اللون الأساسي للتطبيق -->
+    <color name="primary_color">#0D7872</color>
+
+    <!-- لون الإشعارات الافتراضي -->
+    <color name="notification_color">#0D7872</color>
+</resources>

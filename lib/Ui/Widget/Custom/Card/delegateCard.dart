@@ -10,8 +10,9 @@ import '../../../../Config/config.dart';
 import '../../widget.dart';
 
 class DelegateCardX extends StatelessWidget {
-  const DelegateCardX({super.key, required this.delegate, this.onAccept, this.onReject});
+  const DelegateCardX({super.key, required this.delegate, this.onAccept, this.onReject, required this.isToMe});
   final DelegateX delegate;
+  final bool isToMe;
   final Function(DelegateX)? onAccept;
   final Function(DelegateX)? onReject;
   @override
@@ -27,7 +28,7 @@ class DelegateCardX extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (delegate.delegated != null)
+          if (!isToMe)
             ContainerX(
               isBorder: true,
               radius: 100,
@@ -44,17 +45,16 @@ class DelegateCardX extends StatelessWidget {
                 color: color.shade500,
               ),
             ),
-          /// TODO: اضافة اسم الموكل له هنا بدل الموكل
           Row(
             children: [
               TextX(
-                '${'The client'.tr} : ',
+                isToMe?'${'The client'.tr} : ':'${'The delegate'.tr} : ',
                 color: ColorX.grey.shade500,
                 fontWeight: FontWeight.w400,
               ),
               Flexible(
                 child: TextX(
-                  delegate.attendance.user?.name ?? '',
+                  isToMe?delegate.attendance.user?.name ?? '':delegate.delegated?.name ?? '',
                   maxLines: 1,
                   fontWeight: FontWeight.w700,
                 ),
@@ -133,7 +133,7 @@ class DelegateCardX extends StatelessWidget {
                 ),
             ],
           ),
-          if (delegate.status == DelegateStatusStatusX.waitingForApproval && onAccept!=null && onReject!=null)
+          if (isToMe)
           Row(
             children: [
               Flexible(

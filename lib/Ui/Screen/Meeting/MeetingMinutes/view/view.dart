@@ -70,6 +70,7 @@ class MeetingMinutesView extends GetView<MeetingMinutesController> {
                             filePath: controller.file.value.path,
                             swipeHorizontal: true,
                             backgroundColor: Get.theme.cardColor,
+
                           ),
                         ).fadeAnimation200;
                       },

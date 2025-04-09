@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:meeting/Data/Model/delegate/delegate.dart';
+import 'package:meeting/UI/Widget/widget.dart';
 import 'package:meeting/Ui/ScreenSheet/Delegate/AcceptDelegate/view/acceptDelegateSheet.dart';
 
 import '../../../../../Config/Translation/translation.dart';
@@ -16,35 +17,44 @@ class AllDelegatesController extends GetxController {
   RxBool isToMe = true.obs;
   final type = ValueNotifier(1);
   GlobalKey<ScrollRefreshLoadMoreXState> scrollRefreshLoadMoreKey =
-  GlobalKey<ScrollRefreshLoadMoreXState>();
+      GlobalKey<ScrollRefreshLoadMoreXState>();
 
   //============================================================================
   // Functions
 
   Future<List<DelegateX>> getData(ScrollRefreshLoadMoreParametersX data) async {
-    if(isToMe.value){
+    if (isToMe.value) {
       return await DatabaseX.getAllDelegates(
         page: data.page,
         perPage: data.perPage,
       );
-    }else{
-      return [];
-      // return await DatabaseX.getAllDelegates(
-      //   page: data.page,
-      //   perPage: data.perPage,
-      // );
+    } else {
+      return await DatabaseX.getAllMyDelegates(
+        page: data.page,
+        perPage: data.perPage,
+      );
     }
   }
-  onAccept(DelegateX delegate)async{
-    final result =  await acceptDelegateSheetX(id: delegate.id);
-    if(result==true){
-      scrollRefreshLoadMoreKey.currentState?.resetData();
+
+  onAccept(DelegateX delegate) async {
+    try {
+      final result = await acceptDelegateSheetX(id: delegate.id);
+      if (result == true) {
+        scrollRefreshLoadMoreKey.currentState?.resetData();
+      }
+    } catch (e) {
+      ToastX.error(message: e);
     }
   }
-  onReject(DelegateX delegate)async{
-    var result =await rejectDelegateSheetX(id: delegate.id);
-    if(result==true){
-      scrollRefreshLoadMoreKey.currentState?.resetData();
+
+  onReject(DelegateX delegate) async {
+    try {
+      var result = await rejectDelegateSheetX(id: delegate.id);
+      if (result == true) {
+        scrollRefreshLoadMoreKey.currentState?.resetData();
+      }
+    } catch (e) {
+      ToastX.error(message: e);
     }
   }
 

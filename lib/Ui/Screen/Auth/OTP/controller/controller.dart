@@ -5,7 +5,9 @@ import 'package:meeting/Data/Form/Auth/forget_password_otp_check_code.dart';
 import '../../../../../Config/config.dart';
 import '../../../../../Core/Error/error.dart';
 import '../../../../../Core/core.dart';
+import '../../../../../Data/Form/auth/phone_otp_check_code.dart';
 import '../../../../../Data/Model/User/user.dart';
+import '../../../../../Data/Model/auth/otp.dart';
 import '../../../../../Data/data.dart';
 import '../../../../Widget/Package/otp_pin_field_widget/src/otp_pin_field_state.dart';
 import '../../../../Widget/widget.dart';
@@ -25,7 +27,7 @@ class OTPController extends GetxController {
   RxBool isDoneInput = false.obs;
   Rx<ButtonStateEX> buttonState = ButtonStateEX.normal.obs;
 
-  late String email = Get.arguments;
+  OtpX otp = Get.arguments;
 
   TextEditingController otpCode = TextEditingController();
   final GlobalKey<OtpPinFieldState> otpKey = GlobalKey<OtpPinFieldState>();
@@ -41,6 +43,14 @@ class OTPController extends GetxController {
   onTapError() {
     /// Add a link to go to pages through the error message
   }
+  /// Some titles have been duplicated if the title has changed in any case
+  String getSubTitle() {
+    if (otp.isPhone) {
+      return "Please enter the confirmation code sent to your mobile number to complete the process.";
+    }else{
+      return "Please enter the confirmation code sent to your email to complete the process";
+    }
+  }
 
   onVerify() async {
     if (isLoading.isFalse) {
@@ -48,12 +58,24 @@ class OTPController extends GetxController {
       buttonState.value = ButtonStateEX.loading;
       error.value = null;
       try {
-        UserX user = await DatabaseX.forgetPasswordOtpCheckCode(
-          form: ForgetPasswordOtpCheckCodeFormX(
-            email: email,
-            otpCode: otpCode.text,
-          ),
-        );
+        late UserX user;
+
+        if(otp.isPhone){
+          user = await DatabaseX.phoneOtpCheckCode(
+            form: PhoneOtpCheckCodeFormX(
+              phone: otp.phone!,
+              countryCode: otp.countryCode!,
+              otpCode: otpCode.text,
+            ),
+          );
+        }else{
+          user = await DatabaseX.forgetPasswordOtpCheckCode(
+            form: ForgetPasswordOtpCheckCodeFormX(
+              email: otp.email!,
+              otpCode: otpCode.text,
+            ),
+          );
+        }
 
         /// The time delay here is aesthetically beneficial
         buttonState.value = ButtonStateEX.success;
@@ -61,7 +83,17 @@ class OTPController extends GetxController {
           const Duration(seconds: StyleX.successButtonSecond),
         );
 
-        Get.offAndToNamed(RouteNameX.forgotPasswordReset,arguments: user);
+        if(otp.isPhone && otp.isLogin){
+          app.user =user.obs;
+
+          /// save data on local
+          LocalDataX.put(LocalKeyX.token, app.user.value.token);
+          LocalDataX.put(LocalKeyX.route, RouteNameX.root);
+          Get.offAndToNamed(RouteNameX.root);
+
+        }else{
+          Get.offAndToNamed(RouteNameX.forgotPasswordReset,arguments: user);
+        }
 
       } catch (e) {
         error.value = e.toErrorX;
@@ -86,7 +118,7 @@ class OTPController extends GetxController {
     isLoadingResendAgain.value = true;
     error.value = null;
     try {
-      String message = (await DatabaseX.forgetPassword(email: email))??'Verification code has been resent successfully';
+      String message = await sendCode() ?? '';
       isResendAgain.value = false;
       startTimer();
       if (message.isNotEmpty) {
@@ -94,10 +126,24 @@ class OTPController extends GetxController {
       }
     } catch (e) {
       error.value = e.toErrorX;
-      error.value!.log();
-      ToastX.error(message: error);
     }
     isLoadingResendAgain.value = false;
+  }
+
+  /// use api from backend to send code otp
+  sendCode() async {
+    try {
+      if (otp.isPhone) {
+        return await DatabaseX.loginByPhone(
+          phone: otp.phone!,
+          countryCode: otp.countryCode!,
+        );
+      } else {
+        return await DatabaseX.forgetPassword(email: otp.email!);
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// A timer to calculate the time remaining until the code can be re-sent

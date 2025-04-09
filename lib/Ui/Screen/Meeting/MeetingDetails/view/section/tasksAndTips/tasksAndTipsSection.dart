@@ -44,7 +44,7 @@ class TasksAndTipsSection extends GetView<MeetingDetailsController> {
                             strikethroughOnChecked: true,
                             color: Theme.of(context).cardColor,
                             margin: const EdgeInsets.symmetric(vertical: 3),
-                            onChanged: controller.onChangeTask,
+                            onChanged: (_)async=>await controller.onChangeTask(x),
                             textStyle: TextStyleX.titleSmall,
                           ).fadeAnimation250,
                       ],

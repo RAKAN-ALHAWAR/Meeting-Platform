@@ -35,6 +35,37 @@ class DatabaseX {
     return UserX.fromJson(data.$1[NameX.userData], data.$1[NameX.token]);
   }
 
+  static Future<String?> loginByGoogle() async {
+    var data = await RemoteDataSourceX.post(
+      DBEndPointX.postLoginByGoogle,
+    );
+    return data.$1?[NameX.url] ?? '';
+  }
+
+  static Future<String?> loginByPhone({
+    required int phone,
+    required int countryCode,
+  }) async {
+    var data = await RemoteDataSourceX.post(
+      DBEndPointX.postLoginByPhone,
+      param: DataSourceParamX(requestBody: {
+        NameX.phone: phone.toString(),
+        NameX.countryCode: countryCode.toString(),
+      }),
+    );
+    return data.$2;
+  }
+
+  static Future<UserX> phoneOtpCheckCode({
+    required PhoneOtpCheckCodeFormX form,
+  }) async {
+    var data = await RemoteDataSourceX.post(
+      DBEndPointX.postPhoneOtp,
+      body: form.toJson(),
+    );
+    return UserX.fromJson(data.$1[NameX.userData], data.$1[NameX.token]);
+  }
+
   static Future<String?> forgetPassword({required String email}) async {
     var data = await RemoteDataSourceX.post(
       DBEndPointX.postForgotPassword,
@@ -202,7 +233,8 @@ class DatabaseX {
       MeetingX.fromJson(
         Map<String, dynamic>.from(data.$1[NameX.meeting]),
       ),
-      Map<String, dynamic>.from(data.$1[NameX.attendance]??{}).toFromJsonNullableX(AttendanceX.fromJson),
+      Map<String, dynamic>.from(data.$1[NameX.attendance] ?? {})
+          .toFromJsonNullableX(AttendanceX.fromJson),
       List<String>.from(data.$1[NameX.permissions] ?? []),
     );
   }
@@ -313,9 +345,25 @@ class DatabaseX {
   static Future<String?> addSignatureMeetingMinutes(String meetingId) async {
     var data = await RemoteDataSourceX.post(
       DBEndPointX.postAddSignatureMeetingMinutes,
-      param: DataSourceParamX(authToken: LocalDataX.token, pathParams: {
-        NameX.id: meetingId,
-      }),
+      param: DataSourceParamX(
+        authToken: LocalDataX.token,
+        pathParams: {
+          NameX.id: meetingId,
+        },
+      ),
+    );
+    return data.$2;
+  }
+
+  static Future<String?> changeStatusCheckTask(String id) async {
+    var data = await RemoteDataSourceX.put(
+      DBEndPointX.putChangeStatusCheckTask,
+      param: DataSourceParamX(
+        authToken: LocalDataX.token,
+        pathParams: {
+          NameX.id: id,
+        },
+      ),
     );
     return data.$2;
   }
@@ -771,6 +819,34 @@ class DatabaseX {
     }
   }
 
+  static Future<List<DelegateX>> getAllMyDelegates({
+    int page = 1,
+    int perPage = 15,
+  }) async {
+    try {
+      var data = await RemoteDataSourceX.get(
+        DBEndPointX.getAllMyDelegates,
+        param: DataSourceParamX(
+          page: page,
+          limit: perPage,
+          authToken: LocalDataX.token,
+        ),
+      );
+      return ModelUtilX.generateItems(
+        data.$1[NameX.delegate]?[NameX.data],
+        DelegateX.fromJson,
+      );
+    } catch (error) {
+      if (error.toErrorX.errorCode == ErrorCodesX.unauthorized) {
+        AppControllerX app = Get.find();
+        await app.logOut();
+        rethrow;
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   static Future<DelegateX> getDelegateDetails({
     required String id,
   }) async {
@@ -796,7 +872,7 @@ class DatabaseX {
         authToken: LocalDataX.token,
         pathParams: {NameX.id: id},
         requestBody: {
-          NameX.status: isConfirm,
+          NameX.status: isConfirm.toIntX,
         },
       ),
     );

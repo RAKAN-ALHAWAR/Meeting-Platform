@@ -1,100 +1,66 @@
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+
 
 class MyWebViewController extends GetxController {
-  //============================================================================
-  // Variables
+  late InAppWebViewController webViewController;
+  late final String webUrl = convertToZoomWebClient(Get.arguments??'');
+  RxBool isGoogleMeet = false.obs;
+  final progress = 0.obs;
+  RxBool isLoading = true.obs;
+  RxBool isUrlValid = true.obs;
+  Rx<String?> errorMessage = Rx(null);
 
-  String url = Get.arguments??'';
-  Map<String, String> meetingPlatforms = {
+  final Map<String, String> meetingPlatforms = {
     'zoom.us': 'Zoom',
     'teams.microsoft.com': 'Microsoft Teams',
     'meet.google.com': 'Google Meet',
-    'webex.com': 'Cisco Webex',
-    'gotomeeting.com': 'GoToMeeting',
-    'bluejeans.com': 'BlueJeans',
-    'join.me': 'Join.Me',
+    'gotomeeting.com': 'Go To',
     'skype.com': 'Skype',
-    'whereby.com': 'Whereby',
-    'uberconference.com': 'UberConference',
-    'bigbluebutton.org': 'BigBlueButton',
   };
-  RxBool isUrlValid = true.obs;
-  RxBool isLoading = true.obs;
-  RxBool isLoadingWeb = true.obs;
-  RxInt progress = 0.obs;
-  Rx<String?> errorMessage = Rx<String?>(null);
-  String appBarTitle = 'Online Meeting';
-  late WebViewController webViewController;
+  String convertToZoomWebClient(String url) {
+    Uri? uri = Uri.tryParse(url);
+    if (uri == null) return url;
 
-  //============================================================================
-  // Functions
+    if (uri.host.contains("zoom.us") && uri.pathSegments.contains("j")) {
+      String meetingId = uri.pathSegments.last;
+      String? password = uri.queryParameters["pwd"];
 
-  Future<void> _initializeWebView() async {
-    isUrlValid.value = false;
-    if (_isValidUrl(url)) {
-      isUrlValid.value = true;
-      webViewController = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..setNavigationDelegate(
-          NavigationDelegate(
-            onPageStarted: (String url) {
-              _updateAppBarTitle(url);
-               _handleUrl(url);
-              isLoading.value=false;
-              isLoadingWeb.value = true;
-                errorMessage.value = null;
-            },
-            onProgress: (progress) {
-                this.progress.value = progress;
-                if(progress==100) {
-                  isLoadingWeb.value = false;
-                }
-            },
-            onPageFinished: (String url) {
-              isLoadingWeb.value = false;
-            },
-            onWebResourceError: (WebResourceError error) {
-              isLoadingWeb.value = false;
-                errorMessage.value = """⚠️ حدث خطأ أثناء تحميل الصفحة ⚠️ \n--------------------------------\n ${error.errorCode}\n${error.description}\nURL: ${error.url ?? "غير متوفر"}\n""";
-            },
-            onNavigationRequest: (NavigationRequest request) {
-              return NavigationDecision.navigate;
-            },
-          ),
-        )
-        ..loadRequest(Uri.parse(url));
-    } else {
-      isUrlValid.value = false;
-      isLoading.value= false;
+      // إضافة خيارات تفعيل الصوت والفيديو
+      return "https://${uri.host}/wc/join/$meetingId${password != null ? '?pwd=$password&unmute=true&startVideo=true' : '?unmute=true&startVideo=true'}";
+    }
+    return url;
+  }
+  String getMeetingPlatformName() {
+    Uri uri = Uri.parse(webUrl);
+    return meetingPlatforms[uri.host] ?? 'Online Meeting';
+  }
+
+  void updateLoadingProgress(int progress) {
+    this.progress.value = progress;
+    if(progress==100){
+      isLoading.value=false;
     }
   }
+  Future<NavigationActionPolicy> shouldOverrideUrlLoading(
+      InAppWebViewController controller, NavigationAction navigationAction) async {
+    return NavigationActionPolicy.ALLOW;
+  }
 
-  Future<void> _handleUrl(String url) async {
-    if (await _isMeetingPlatformUrl(url) &&
-        await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-      Get.back();
+  Future<void> handleExternalNavigation() async {
+    if (webUrl.contains("meet.google.com")) {
+       isGoogleMeet.value=true;
+        final uri = Uri.parse(webUrl);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        }
+        Get.back();
+    }else{
+      isGoogleMeet.value=false;
     }
   }
-
-  Future<bool> _isMeetingPlatformUrl(String url) async {
-    Uri uri = Uri.parse(url);
-    return meetingPlatforms.keys.any((domain) => uri.host.contains(domain));
-  }
-
-  void _updateAppBarTitle(String url) {
-    Uri uri = Uri.parse(url);
-    String platformName = meetingPlatforms.entries
-        .firstWhere((entry) => uri.host.contains(entry.key),
-            orElse: () => const MapEntry('', 'Online Meeting'))
-        .value;
-
-    appBarTitle = platformName;
-    update();
-  }
-
   bool _isValidUrl(String url) {
     try {
       Uri uri = Uri.parse(url);
@@ -103,10 +69,16 @@ class MyWebViewController extends GetxController {
       return false;
     }
   }
-
+  Future<void> requestPermissions() async {
+    await [
+      Permission.microphone,
+      Permission.camera,
+    ].request();
+  }
   @override
   void onInit() {
     super.onInit();
-    _initializeWebView();
+    requestPermissions();
+    isUrlValid.value = _isValidUrl(webUrl);
   }
 }

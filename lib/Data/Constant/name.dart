@@ -88,6 +88,7 @@ class NameX {
   static const String newMeeting = 'new_meeting';
   static const String task = 'task';
 
+  static const String vote = 'vote';
   static const startAt = 'start_at';
   static const endAt = 'end_at';
   static const voteAt = 'vote_at';

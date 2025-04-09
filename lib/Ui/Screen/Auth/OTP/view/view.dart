@@ -17,8 +17,7 @@ class OTPView extends GetView<OTPController> {
   Widget build(BuildContext context) {
     return AuthLayoutX(
       title: 'Confirmation code',
-      subtitle:
-          'Please enter the confirmation code sent to your email to complete the process',
+      subtitle: controller.getSubTitle(),
       child: Obx(
         () => AbsorbPointer(
           absorbing: controller.isLoading.value,

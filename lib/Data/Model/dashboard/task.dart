@@ -26,7 +26,6 @@ class TaskX {
   factory TaskX.fromJson(Map<String, dynamic> json) {
     Map<String, Object?> meetingJson = Map<String, Object?>.from(
         json[NameX.meeting] ?? {});
-
     return ModelUtilX.checkFromJson(
       json,
           (json) =>

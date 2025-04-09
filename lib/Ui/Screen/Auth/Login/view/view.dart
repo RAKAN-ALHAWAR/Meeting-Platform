@@ -36,7 +36,8 @@ class LoginView extends GetView<LoginController> {
               TabSegmentX(
                 controller: controller.loginVia,
                 tabs: {
-                  1: 'Email'.tr,
+                  // 1: 'Email'.tr,
+                  1: 'Phone'.tr,
                   2: 'ID Number'.tr,
                 },
               ).fadeAnimation300.marginOnly(bottom: 16),
@@ -48,17 +49,28 @@ class LoginView extends GetView<LoginController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (controller.isEmail.value)
-                      TextFieldX(
-                        key: const Key('Email'),
-                        label: "Email",
-                        controller: controller.email,
-                        validate: ValidateX.email,
-                        hint: '',
-                        textInputType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                      ).marginSymmetric(vertical: 2).fadeAnimation400,
-                    if (!controller.isEmail.value)
+                    // if (controller.isEmail.value)
+                    //   TextFieldX(
+                    //     key: const Key('Email'),
+                    //     label: "Email",
+                    //     controller: controller.email,
+                    //     validate: ValidateX.email,
+                    //     hint: '',
+                    //     textInputType: TextInputType.emailAddress,
+                    //     textInputAction: TextInputAction.next,
+                    //   ).marginSymmetric(vertical: 2).fadeAnimation400,
+                    if (controller.isPhone.value)
+                    PhoneFieldX(
+                      key: const Key('Phone'),
+                      label: "Phone",
+                      hint: '',
+                      controller: controller.phone,
+                      onChangeCountryCode: controller.onChangeCountryCode,
+                      countryCode: controller.countryCode.value,
+                    ).marginSymmetric(vertical: 2).fadeAnimation400,
+
+                    // if (!controller.isEmail.value)
+                    if (!controller.isPhone.value)
                       TextFieldX(
                         key: const Key('ID number'),
                         label: "Your ID number",
@@ -68,6 +80,7 @@ class LoginView extends GetView<LoginController> {
                         textInputType: TextInputType.number,
                         textInputAction: TextInputAction.done,
                       ).marginSymmetric(vertical: 2).fadeAnimation400,
+                    if (!controller.isPhone.value)
                     TextFieldX(
                       label: "Password",
                       controller: controller.password,
@@ -77,7 +90,8 @@ class LoginView extends GetView<LoginController> {
                       textInputType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
                       color: Get.theme.cardTheme.color,
-                    ).marginOnly(top: 2).fadeAnimation500,
+                    ).fadeAnimation500.marginOnly(top: 2),
+                    if (!controller.isPhone.value)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -108,6 +122,18 @@ class LoginView extends GetView<LoginController> {
                 state: controller.buttonState.value,
                 text: 'Log in',
               ).fadeAnimation600,
+
+              // const SizedBox(height: 6.0),
+              // /// Button Login
+              // ButtonStateX(
+              //   onTap: controller.onLoginByGoogle,
+              //   state: controller.buttonGoogleState.value,
+              //   text: 'Sign in with Google',
+              //   colorText: Theme.of(context).iconTheme.color,
+              //   colorButton: Colors.transparent,
+              //   borderColor: ColorX.grey.shade200,
+              //   icon: Image.asset(ImageX.google,height: 24,),
+              // ).fadeAnimation650,
 
               const SizedBox(height: 30.0),
 

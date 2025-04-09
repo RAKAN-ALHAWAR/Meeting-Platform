@@ -38,8 +38,7 @@ class RemoteDataSourceX {
       String? message;
       message = (result is Map && result[RemoteKeyX.infoMessage] is String)
           ? result[RemoteKeyX.infoMessage]
-          : null;
-      message = (result is Map && result[RemoteKeyX.infoMessage2] is String)
+          : (result is Map && result[RemoteKeyX.infoMessage2] is String)
           ? result[RemoteKeyX.infoMessage2]
           : null;
       return (result,message);
