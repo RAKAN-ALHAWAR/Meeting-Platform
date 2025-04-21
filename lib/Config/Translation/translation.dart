@@ -16,7 +16,7 @@ class TranslationX extends Translations {
   // Data
 
   /// Backup language
-  static const fallbackLocale = Locale('ar');
+  static const fallbackLocale = Locale('en');
 
   ///Names of available languages with their code
   static final List<Map<String, String>> languages = [

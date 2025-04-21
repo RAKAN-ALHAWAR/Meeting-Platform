@@ -74,7 +74,7 @@ class DBEndPointX {
   static final String getAllMyMeetings = '${mainAPI}admin/meetings/my/meeting';
   static final String getAllNewMeetings = '${mainAPI}dashboard/employee';
   static final String postAddSignatureMeetingMinutes = '${mainAPI}admin/attendance/signatures/{id}/add';
-  static final String putChangeStatusCheckTask = '${mainAPI}meetings/agenda/recommendations/{id}';
+  static final String putChangeStatusCheckTask = '${mainAPI}meetings/task/{id}';
 
   // ============================================================================
   // Attendances

@@ -10,6 +10,7 @@ class TaskX {
     required this.content,
     required this.meetingId,
     required this.userId,
+    required this.isDone,
     required this.createdAt,
     required this.updatedAt,
     required this.meeting,
@@ -19,6 +20,7 @@ class TaskX {
   final String content;
   final int meetingId;
   final int userId;
+  final bool isDone;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final MiniMeetingX? meeting;
@@ -34,6 +36,7 @@ class TaskX {
             content: json[NameX.content].toStrX,
             meetingId: json[NameX.meetingId].toIntX,
             userId: json[NameX.userId].toIntX,
+            isDone: json[NameX.status].toBoolDefaultX(false),
             createdAt: json[NameX.createdAt].toDateTimeNullableX,
             updatedAt: json[NameX.updatedAt].toDateTimeNullableX,
             meeting: meetingJson.toFromJsonNullableX(MiniMeetingX.fromJson),
@@ -53,6 +56,7 @@ class TaskX {
       NameX.content: content,
       NameX.meetingId: meetingId,
       NameX.userId: userId,
+      NameX.status: isDone,
       NameX.createdAt: createdAt?.toIso8601String(),
       NameX.updatedAt: updatedAt?.toIso8601String(),
       NameX.meeting: meeting?.toJson(),

@@ -25,16 +25,22 @@
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
+
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to your microphone for meetings.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera for video calls.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs photo studio permission</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need permission to save photos to the photo library.</string>
-	<key>NSDocumentsFolderUsageDescription</key>
-	<string>We need access to documents to select files.</string>
+    <string>This app requires access to the microphone to record your voice during meetings.</string>
+
+    <key>NSCameraUsageDescription</key>
+    <string>This app requires access to the camera to take a profile picture or capture a signature image.</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app requires access to your photo library to upload a profile picture, signature image, or attach images when submitting suggestions.</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>This app requires permission to save meeting minutes or related files to your photo library.</string>
+
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>This app requires access to your files so you can attach documents when submitting suggestions.</string>
+
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>

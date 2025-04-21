@@ -24,17 +24,17 @@ class EditProfileView extends GetView<EditProfileController> {
             children: [
               /// Image Input
               const ProfileImageSectionX(),
-        
+
               const SizedBox(height: 24),
-        
+
               /// Card Inputs
               const InputSectionX(),
               const SizedBox(height: 20),
-        
+
               /// Save & Cancel Buttons
               Row(
                 children: [
-                  Flexible(
+                  Expanded(
                     child: Obx(
                       () => ButtonStateX(
                         state: controller.buttonState.value,
@@ -44,7 +44,7 @@ class EditProfileView extends GetView<EditProfileController> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Flexible(
+                  Expanded(
                     child: ButtonX.gray(
                       onTap: () => Get.back(),
                       text: "Cancel",

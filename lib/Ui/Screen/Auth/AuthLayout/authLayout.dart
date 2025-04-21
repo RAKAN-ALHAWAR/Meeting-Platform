@@ -77,7 +77,10 @@ class AuthLayoutX extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ).marginOnly(bottom: 28).fadeAnimation200,
 
-                      child,
+                      Container(
+                          constraints: BoxConstraints(maxWidth: 700),
+                          child: child,
+                      ),
                     ],
                   ),
                 ),

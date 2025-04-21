@@ -39,7 +39,7 @@ class TasksAndTipsSection extends GetView<MeetingDetailsController> {
 
                           /// Task item with a checkbox
                           CheckBoxX(
-                            value: false,
+                            value: x.isDone,
                             label: x.content,
                             strikethroughOnChecked: true,
                             color: Theme.of(context).cardColor,

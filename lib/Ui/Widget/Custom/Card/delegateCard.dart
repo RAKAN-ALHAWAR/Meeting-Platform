@@ -28,7 +28,7 @@ class DelegateCardX extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (!isToMe)
+          if (!isToMe || (isToMe && delegate.status!=DelegateStatusStatusX.waitingForApproval))
             ContainerX(
               isBorder: true,
               radius: 100,
@@ -133,7 +133,7 @@ class DelegateCardX extends StatelessWidget {
                 ),
             ],
           ),
-          if (isToMe)
+          if (isToMe && delegate.status==DelegateStatusStatusX.waitingForApproval)
           Row(
             children: [
               Flexible(

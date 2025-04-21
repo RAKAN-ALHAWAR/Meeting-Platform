@@ -144,7 +144,7 @@ class MeetingDetailsController extends GetxController
     }
     /// Get First Suggestion
     mySuggestion.value = meeting.value.suggestions.firstWhereOrNull(
-      (x) => x.userId == app.user.value.id,
+          (x) => x.userId == app.user.value.id,
     );
 
     /// Attendances
@@ -192,7 +192,7 @@ class MeetingDetailsController extends GetxController
           selectedDelegatedUser.value == null) {
         ToastX.error(
           message:
-              'You must select a client before updating your attendance status',
+          'You must select a client before updating your attendance status',
         );
       } else {
         if (formKeyPresenceStatus.currentState?.validate() ?? true) {
@@ -252,7 +252,7 @@ class MeetingDetailsController extends GetxController
           /// Reset the button state
           Timer(
             const Duration(seconds: StyleX.returnButtonToNormalStateSecond),
-            () {
+                () {
               buttonStatePresenceStatus.value = ButtonStateEX.normal;
             },
           );
@@ -305,7 +305,7 @@ class MeetingDetailsController extends GetxController
         /// Reset the button state
         Timer(
           const Duration(seconds: StyleX.returnButtonToNormalStateSecond),
-          () {
+              () {
             buttonStateSuggestion.value = ButtonStateEX.normal;
           },
         );
@@ -363,26 +363,28 @@ class MeetingDetailsController extends GetxController
         /// Reset the button state
         Timer(
           const Duration(seconds: StyleX.returnButtonToNormalStateSecond),
-          () {
+              () {
             buttonStateVote.value = ButtonStateEX.normal;
           },
         );
       } else {
         ToastX.error(
           message:
-              'Please answer all the questions before saving and submitting',
+          'Please answer all the questions before saving and submitting',
         );
       }
     }
   }
 
   onChangeTask(TaskX task) async {
-    /// TODO: اضافة ربط انجاز المهام بقاعدة البيانات
-    // try{
-    //   await DatabaseX.changeStatusCheckTask(task.id.toString());
-    // }catch(e){
-    //   ToastX.error(message: e.toString());
-    // }
+    try{
+      String? message = await DatabaseX.changeStatusCheckTask(task.id.toString());
+      if(message!=null && message.isNotEmpty){
+        ToastX.success(message: message);
+      }
+    }catch(e){
+      ToastX.error(message: e.toString());
+    }
   }
 
   bool allQuestionsHaveAnswers() {
@@ -405,37 +407,37 @@ class MeetingDetailsController extends GetxController
 
   bool get isShowPresenceStatus =>
       isOngoingMeeting.isFalse ||
-      myAttendance.value?.status != AttendanceStatusStatusX.present;
+          myAttendance.value?.status != AttendanceStatusStatusX.present;
   bool get isShowNowOngoing =>
       isOngoingMeeting.isTrue &&
-      myAttendance.value?.status == AttendanceStatusStatusX.present;
+          myAttendance.value?.status == AttendanceStatusStatusX.present;
   bool get isShowPresenceStatusButtons =>
       (myAttendance.value?.status == AttendanceStatusStatusX.absent ||
           isEditPresenceStatus.isTrue) &&
-      isClosedMeeting.isFalse;
+          isClosedMeeting.isFalse;
   bool get isShowPresentCardPresenceStatus =>
       myAttendance.value?.status == AttendanceStatusStatusX.present &&
-      isClosedMeeting.isFalse &&
-      isEditPresenceStatus.isFalse;
+          isClosedMeeting.isFalse &&
+          isEditPresenceStatus.isFalse;
   bool get isShowDelegatedToSomeoneElsePresenceStatus =>
       myAttendance.value?.status == AttendanceStatusStatusX.byDelegated &&
-      isEditPresenceStatus.isFalse;
+          isEditPresenceStatus.isFalse;
   bool get isShowMeetingAttendedPresenceStatus =>
       myAttendance.value?.status == AttendanceStatusStatusX.present &&
-      isClosedMeeting.isTrue &&
-      isEditPresenceStatus.isFalse;
+          isClosedMeeting.isTrue &&
+          isEditPresenceStatus.isFalse;
   bool get isShowAbsentFromMeetingPresenceStatus =>
       myAttendance.value?.status == AttendanceStatusStatusX.absent &&
-      isClosedMeeting.isTrue &&
-      isEditPresenceStatus.isFalse;
+          isClosedMeeting.isTrue &&
+          isEditPresenceStatus.isFalse;
   bool get isShowNonAttendanceMeetingPresenceStatus =>
       myAttendance.value?.status == AttendanceStatusStatusX.excused &&
-      isEditPresenceStatus.isFalse;
+          isEditPresenceStatus.isFalse;
   bool get isDisableButtonOfSavePresenceStatus =>
       selectedPresenceStatus.value == 2 && selectedDelegatedUser.value == null;
   bool get isShowGeneralRecommendations =>
       meeting.value.isClosed &&
-      meeting.value.agendas.where((x) => x.recommendContent != null).isNotEmpty;
+          meeting.value.agendas.where((x) => x.recommendContent != null).isNotEmpty;
 
   checkIsOngoing() {
     final now = DateTime.now();
@@ -597,15 +599,15 @@ class MeetingDetailsController extends GetxController
     _dataUpdateTimer?.cancel();
     _dataUpdateTimer =
         Timer.periodic(const Duration(seconds: 60), (timer) async {
-      if (_isUpdatingData) return;
-      _isUpdatingData = true;
-      try {
-        await getData();
-      } catch (_) {
-      } finally {
-        _isUpdatingData = false;
-      }
-    });
+          if (_isUpdatingData) return;
+          _isUpdatingData = true;
+          try {
+            await getData();
+          } catch (_) {
+          } finally {
+            _isUpdatingData = false;
+          }
+        });
   }
   //============================================================================
   // Initialization

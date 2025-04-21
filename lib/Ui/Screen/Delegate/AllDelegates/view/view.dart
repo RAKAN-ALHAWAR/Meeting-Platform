@@ -69,7 +69,7 @@ class AllDelegatesView extends GetView<AllDelegatesController> {
                   ],
                 ).fadeAnimation150,
                 isEmptyCenter: true,
-                pageSize: 15,
+                pageSize: 30,
                 emptyMessage: 'There are no meetings.',
                 itemBuilder: (data, index) {
                   return DelegateCardX(
