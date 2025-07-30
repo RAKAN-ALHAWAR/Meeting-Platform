@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.meeting.rakanalhawar"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -31,7 +31,7 @@ android {
         applicationId = "com.meeting.rakanalhawar"
         minSdk = 23
         multiDexEnabled true
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
