@@ -14,6 +14,9 @@ class MySuggestionsView extends GetView<MySuggestionsController> {
   const MySuggestionsView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScrollRefreshLoadMoreXState> key =
+    GlobalKey<ScrollRefreshLoadMoreXState>();
+    controller.scrollRefreshLoadMoreKey=key;
     return Scaffold(
       appBar: const AppBarX(title: 'My suggestions'),
       body: SafeArea(

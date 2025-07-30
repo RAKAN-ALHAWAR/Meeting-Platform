@@ -11,6 +11,8 @@ class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey();
+    controller.formKey=formKey;
     return AuthLayoutX(
       isBackIcon: false,
       isShowLogo: false,

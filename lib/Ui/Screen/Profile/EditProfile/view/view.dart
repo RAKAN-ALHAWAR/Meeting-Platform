@@ -12,6 +12,8 @@ class EditProfileView extends GetView<EditProfileController> {
   const EditProfileView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey();
+    controller.formKey=formKey;
     return Scaffold(
       appBar: const AppBarX(title: "My personal data"),
       body: SafeArea(

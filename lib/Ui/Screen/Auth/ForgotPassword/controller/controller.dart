@@ -20,7 +20,7 @@ class ForgotPasswordController extends GetxController {
   RxBool isEmail = true.obs;
   Rx<ErrorX?> error = Rx<ErrorX?>(null);
 
-  GlobalKey<FormState> formKey = GlobalKey();
+  late GlobalKey<FormState> formKey;
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
 
   TextEditingController email = TextEditingController();

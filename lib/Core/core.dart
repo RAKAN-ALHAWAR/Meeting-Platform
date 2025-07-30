@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:meeting/Core/Service/deep_link_service.dart';
 import '../Config/config.dart';
 import '../Data/Model/User/user.dart';
 import '../Data/data.dart';
@@ -35,6 +36,7 @@ class CoreX {
     await InfoUtilX.init();
     await HttpX.init();
     await OnesignalServiceX.init();
+    await DeepLinkServiceX.init();
     // await FirebaseNotificationServiceX.init();
     /// Here codes are added to configure anything within this section when the application starts
   }

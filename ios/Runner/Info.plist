@@ -41,6 +41,20 @@
     <key>NSDocumentsFolderUsageDescription</key>
     <string>This app requires access to your files so you can attach documents when submitting suggestions.</string>
 
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>https</string>
+            </array>
+            <key>CFBundleURLName</key>
+            <string>meeting.edialoguec.sa</string>
+        </dict>
+    </array>
+
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>

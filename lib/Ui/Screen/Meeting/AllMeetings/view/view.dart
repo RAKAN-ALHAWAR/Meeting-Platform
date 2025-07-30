@@ -13,6 +13,9 @@ class AllMeetingsView extends GetView<AllMeetingsController> {
   const AllMeetingsView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScrollRefreshLoadMoreXState> key =
+    GlobalKey<ScrollRefreshLoadMoreXState>();
+    controller.scrollRefreshLoadMoreKey=key;
     return Scaffold(
       body: Column(
         children: [

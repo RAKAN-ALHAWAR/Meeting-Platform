@@ -10,6 +10,8 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   const ForgotPasswordView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey();
+    controller.formKey=formKey;
     return AuthLayoutX(
       title: 'Recover password',
       subtitle: 'Please enter your email and click submit',

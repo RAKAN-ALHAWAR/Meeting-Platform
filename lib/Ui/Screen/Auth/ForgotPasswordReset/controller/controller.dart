@@ -28,7 +28,7 @@ class ForgotPasswordResetController extends GetxController {
 
   Rx<ErrorX?> error = Rx<ErrorX?>(null);
 
-  GlobalKey<FormState> formKey = GlobalKey();
+  late GlobalKey<FormState> formKey;
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
 
   TextEditingController password = TextEditingController();

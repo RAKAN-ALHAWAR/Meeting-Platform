@@ -10,6 +10,8 @@ class ForgotPasswordResetView extends GetView<ForgotPasswordResetController> {
   const ForgotPasswordResetView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey();
+    controller.formKey=formKey;
     return AuthLayoutX(
       title: 'Set a new password',
       subtitle: 'Please enter a new password',

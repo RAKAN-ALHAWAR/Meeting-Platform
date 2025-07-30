@@ -18,8 +18,7 @@ class MySuggestionsController extends GetxController {
   //============================================================================
   // Variables
 
-  GlobalKey<ScrollRefreshLoadMoreXState> scrollRefreshLoadMoreKey =
-      GlobalKey<ScrollRefreshLoadMoreXState>();
+  late GlobalKey<ScrollRefreshLoadMoreXState> scrollRefreshLoadMoreKey;
 
   //============================================================================
   // Functions

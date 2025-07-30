@@ -31,7 +31,7 @@ class LoginController extends GetxController {
   Rx<ErrorX?> error = Rx<ErrorX?>(null);
   RxInt countryCode = 966.obs;
 
-  GlobalKey<FormState> formKey = GlobalKey();
+  late GlobalKey<FormState> formKey;
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
 
   TextEditingController password = TextEditingController();

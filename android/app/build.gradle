@@ -35,6 +35,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+//    85:00:57:E5:5F:2E:E4:C6:28:26:D8:24:C7:B2:94:88:EF:F8:69:D9:EF:42:8D:16:9B:9A:4C:D3:30:AC:D9:71
 
     signingConfigs {
         release {

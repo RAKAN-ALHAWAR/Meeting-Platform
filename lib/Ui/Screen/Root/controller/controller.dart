@@ -12,9 +12,9 @@ class RootController extends GetxController {
   //============================================================================
   // Variables
 
-  RxInt indexPageSelected = 0.obs;
   late List<RootPageX> pages = navBarItems;
   RxBool isMoreDynamicPage = false.obs;
+  RxInt indexPageSelected = 0.obs;
 
   //============================================================================
   // Functions
@@ -27,5 +27,4 @@ class RootController extends GetxController {
 
   openHome() => onItemSelected(0);
   openDelegates() => onItemSelected(2);
-
 }

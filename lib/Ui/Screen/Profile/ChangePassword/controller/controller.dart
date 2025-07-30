@@ -17,7 +17,7 @@ class ChangePasswordController extends GetxController {
   Rx<ButtonStateEX> buttonState = ButtonStateEX.normal.obs;
 
   /// Input Filed
-  GlobalKey<FormState> formKey = GlobalKey();
+  late GlobalKey<FormState> formKey;
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
   TextEditingController oldPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();

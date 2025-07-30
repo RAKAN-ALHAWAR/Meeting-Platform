@@ -28,7 +28,7 @@ class EditProfileController extends GetxController {
   final ImagePicker picker = ImagePicker();
 
   /// Input Filed
-  GlobalKey<FormState> formKey = GlobalKey();
+  late GlobalKey<FormState> formKey;
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
   late TextEditingController name =
       TextEditingController(text: app.user.value.name);

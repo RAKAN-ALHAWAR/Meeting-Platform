@@ -14,6 +14,8 @@ class AddSuggestionView extends GetView<AddSuggestionController> {
   const AddSuggestionView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey();
+    controller.formKey=formKey;
     return Scaffold(
       appBar: const AppBarX(title: 'Add a new suggestion'),
       body: SafeArea(

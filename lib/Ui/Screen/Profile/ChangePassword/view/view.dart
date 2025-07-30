@@ -11,6 +11,8 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   const ChangePasswordView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey();
+    controller.formKey=formKey;
     return Scaffold(
       appBar: const AppBarX(title: "Change password"),
       body: SingleChildScrollView(

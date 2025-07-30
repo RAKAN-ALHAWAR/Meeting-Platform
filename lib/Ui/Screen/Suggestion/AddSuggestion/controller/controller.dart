@@ -19,7 +19,7 @@ class AddSuggestionController extends GetxController {
   RxBool isLoading = false.obs;
   Rx<ButtonStateEX> buttonState = ButtonStateEX.normal.obs;
   RxList<PlatformFile> files = <PlatformFile>[].obs;
-  GlobalKey<FormState> formKey = GlobalKey();
+  late GlobalKey<FormState> formKey;
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();

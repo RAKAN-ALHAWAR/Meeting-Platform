@@ -13,6 +13,9 @@ class AllDelegatesView extends GetView<AllDelegatesController> {
   const AllDelegatesView({super.key});
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScrollRefreshLoadMoreXState> key =
+    GlobalKey<ScrollRefreshLoadMoreXState>();
+    controller.scrollRefreshLoadMoreKey=key;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(

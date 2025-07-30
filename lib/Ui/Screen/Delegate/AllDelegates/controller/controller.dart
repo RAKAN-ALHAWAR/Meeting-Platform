@@ -16,8 +16,7 @@ class AllDelegatesController extends GetxController {
 
   RxBool isToMe = true.obs;
   final type = ValueNotifier(1);
-  GlobalKey<ScrollRefreshLoadMoreXState> scrollRefreshLoadMoreKey =
-      GlobalKey<ScrollRefreshLoadMoreXState>();
+  late GlobalKey<ScrollRefreshLoadMoreXState> scrollRefreshLoadMoreKey;
 
   //============================================================================
   // Functions

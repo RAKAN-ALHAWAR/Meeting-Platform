@@ -13,8 +13,7 @@ class AllMeetingsController extends GetxController {
 
   List<String> tags = ['All meetings', 'Periodic meetings', 'Meetings ended'];
   late RxInt selectedTag = 0.obs;
-  GlobalKey<ScrollRefreshLoadMoreXState> scrollRefreshLoadMoreKey =
-      GlobalKey<ScrollRefreshLoadMoreXState>();
+  late GlobalKey<ScrollRefreshLoadMoreXState> scrollRefreshLoadMoreKey;
 
   //============================================================================
   // Functions
