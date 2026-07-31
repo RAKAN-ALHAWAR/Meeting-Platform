@@ -40,7 +40,7 @@ class InputSectionX extends GetView<EditProfileController> {
               label: "Email",
               isRequired: true,
               onlyRead: true,
-              color: ColorX.grey.shade50.withOpacity(0.4),
+              color: ColorX.grey.shade50.withValues(alpha: 0.4),
               validate: ValidateX.email,
               textInputType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
@@ -52,22 +52,20 @@ class InputSectionX extends GetView<EditProfileController> {
               onChangeCountryCode: controller.onChangeCountryCode,
               countryCode: controller.countryCode,
             ).marginSymmetric(vertical: 10.0).fadeAnimation300,
-
             TextFieldX(
               controller: controller.category,
               label: "Category",
               onlyRead: true,
-              color: ColorX.grey.shade50.withOpacity(0.4),
+              color: ColorX.grey.shade50.withValues(alpha: 0.4),
               // validate: ValidateX.name,
               textInputType: TextInputType.name,
               textInputAction: TextInputAction.next,
             ).fadeAnimation350,
-
             TextFieldX(
               controller: controller.jobTitle,
               label: "Job Title",
               onlyRead: true,
-              color: ColorX.grey.shade50.withOpacity(0.4),
+              color: ColorX.grey.shade50.withValues(alpha: 0.4),
               // validate: ValidateX.name,
               textInputType: TextInputType.name,
               textInputAction: TextInputAction.done,

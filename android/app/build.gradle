@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.meeting.rakanalhawar"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -29,9 +29,9 @@ android {
 
     defaultConfig {
         applicationId = "com.meeting.rakanalhawar"
-        minSdk = 23
+        minSdkVersion = flutter.minSdkVersion
         multiDexEnabled true
-        targetSdk = 35
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -65,5 +65,16 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
-    implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
+    implementation 'com.google.firebase:firebase-crashlytics:20.0.2'
+}
+
+// حل مشكلة تضارب مكتبات PDF
+configurations.all {
+    resolutionStrategy {
+        // استبعاد التبعيات المتضاربة من مكتبات PDF المختلفة
+        exclude group: 'com.github.marain87', module: 'AndroidPdfViewer'
+        exclude group: 'com.github.marain87', module: 'PdfiumAndroid'
+        exclude group: 'io.github.oothp', module: 'android-pdf-viewer'
+        exclude group: 'io.github.oothp', module: 'pdfium-android'
+    }
 }

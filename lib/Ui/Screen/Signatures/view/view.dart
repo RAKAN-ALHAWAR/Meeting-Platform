@@ -16,7 +16,6 @@ class SignaturesView extends GetView<SignaturesController> {
       body: SafeArea(
         child: Obx(
           () {
-            print( controller.signature.value);
             if (controller.signature.value != null) {
               /// Show Signature
               return SingleChildScrollView(
@@ -43,6 +42,7 @@ class SignaturesView extends GetView<SignaturesController> {
                             ),
                           ),
                         ),
+
                         /// Delete Icon
                         Positioned.directional(
                           textDirection: Directionality.of(context),

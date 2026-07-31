@@ -13,7 +13,7 @@ class ScrollRefreshLoadMoreX<T> extends StatefulWidget {
   final Widget Function(T data, int index) itemBuilder;
 
   final Future<List<T>> Function(ScrollRefreshLoadMoreParametersX parameters)
-  fetchData;
+      fetchData;
 
   final List<T> firstFixedData;
   final List<T> lastFixedData;
@@ -21,8 +21,8 @@ class ScrollRefreshLoadMoreX<T> extends StatefulWidget {
 
   final VoidCallback? onRefresh;
   final Function(
-      bool isInitLoading, bool isLoadMoreLoading, bool isRefreshLoading)?
-  onLoading;
+          bool isInitLoading, bool isLoadMoreLoading, bool isRefreshLoading)?
+      onLoading;
 
   final Map<String, dynamic>? filters;
   final int pageSize;
@@ -81,7 +81,7 @@ class ScrollRefreshLoadMoreX<T> extends StatefulWidget {
     required this.itemBuilder,
     this.firstFixedData = const [],
     this.lastFixedData = const [],
-    this.isShowFixedDataAsInitLoading=false,
+    this.isShowFixedDataAsInitLoading = false,
     this.empty,
     this.emptySearch,
     this.emptyMessage,
@@ -128,8 +128,8 @@ class ScrollRefreshLoadMoreX<T> extends StatefulWidget {
     bool isScrollEnabled = false,
   }) {
     this.isScrollEnabled =
-    this.parentScrollController != null ? true : isScrollEnabled;
-    this.isExpanded = this.parentScrollController != null ? false : isExpanded;
+        parentScrollController != null ? true : isScrollEnabled;
+    this.isExpanded = parentScrollController != null ? false : isExpanded;
   }
 
   @override
@@ -166,8 +166,8 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
     }
     currentPage = widget.initPage;
     scrollController = widget.scrollController ?? ScrollController();
-    if(widget.isShowFixedDataAsInitLoading){
-      items=[
+    if (widget.isShowFixedDataAsInitLoading) {
+      items = [
         ...widget.firstFixedData,
         ...widget.lastFixedData,
       ];
@@ -211,9 +211,11 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
 
   Future<void> checkIfNeedScroll() async {
     if (!mounted) return;
-    if(items.isNotEmpty && scrollController.hasClients){
+    if (items.isNotEmpty && scrollController.hasClients) {
       while (true) {
-        if (scrollController.hasClients && scrollController.position.maxScrollExtent == 0 && hasMoreData) {
+        if (scrollController.hasClients &&
+            scrollController.position.maxScrollExtent == 0 &&
+            hasMoreData) {
           updateShouldShowLoadMore(isShowLoadMore: true);
           await checkGetMoreData();
         } else {
@@ -246,10 +248,12 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
       if (index != null && index >= 0 && index < items.length) {
         items.insert(index, newItem); // إدراج العنصر في الـ index المحدد
       } else {
-        items.add(newItem); // إضافة العنصر في نهاية القائمة إذا لم يتم تحديد index صحيح
+        items.add(
+            newItem); // إضافة العنصر في نهاية القائمة إذا لم يتم تحديد index صحيح
       }
     });
   }
+
   // حذف عنصر باستخدام الفهرس
   void removeItemByIndex(int index) {
     setState(() {
@@ -309,7 +313,7 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
       if (isInit || isRefresh) {
         hasMoreData = widget.isGetMoreEnabled;
         currentPage = widget.initPage;
-        items=[];
+        items = [];
       }
       widget.onLoading?.call(isInit, isLoadMore, isRefresh);
     });
@@ -372,12 +376,13 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
   }
 
   Future<void> checkGetMoreData() async {
-    if (widget.isGetMoreEnabled && ((widget.parentScrollController != null &&
-        widget.parentScrollController!.position.pixels ==
-            widget.parentScrollController!.position.maxScrollExtent) ||
-        (scrollController.hasClients &&
-            scrollController.position.pixels ==
-                scrollController.position.maxScrollExtent)) &&
+    if (widget.isGetMoreEnabled &&
+        ((widget.parentScrollController != null &&
+                widget.parentScrollController!.position.pixels ==
+                    widget.parentScrollController!.position.maxScrollExtent) ||
+            (scrollController.hasClients &&
+                scrollController.position.pixels ==
+                    scrollController.position.maxScrollExtent)) &&
         hasMoreData &&
         !isLoadMoreLoading) {
       await loadData(isLoadMore: true);
@@ -385,30 +390,30 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
   }
 
   void updateShouldShowLoadMore({bool? isShowLoadMore}) {
-    if(!widget.isGetMoreEnabled){
+    if (!widget.isGetMoreEnabled) {
       setState(() {
         shouldShowLoadMore = false;
       });
-    }else if (isShowLoadMore != null ||
+    } else if (isShowLoadMore != null ||
         (!scrollController.hasClients && hasMoreData && !isRefreshing)) {
       setState(() {
         shouldShowLoadMore = isShowLoadMore ?? true;
       });
     } else if (error == null &&
         ((widget.parentScrollController != null &&
-            widget.parentScrollController!.hasClients) ||
+                widget.parentScrollController!.hasClients) ||
             scrollController.hasClients)) {
       setState(() {
         shouldShowLoadMore =
             (widget.parentScrollController?.position.maxScrollExtent ??
-                scrollController.position.maxScrollExtent) >
+                    scrollController.position.maxScrollExtent) >
                 10;
       });
     }
     setState(() {
       shouldShowNoMoreData =
           (widget.parentScrollController?.position.maxScrollExtent ??
-              scrollController.position.maxScrollExtent) >
+                  scrollController.position.maxScrollExtent) >
               10;
     });
   }
@@ -462,8 +467,9 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
     } else {
       return LayoutBuilder(
         builder: (context, constraints) {
-          double minHeight =
-          widget.isScrollEnabled?0:constraints.maxHeight - (widget.padding?.vertical ?? 0);
+          double minHeight = widget.isScrollEnabled
+              ? 0
+              : constraints.maxHeight - (widget.padding?.vertical ?? 0);
           return Container(
             constraints: constraints,
             child: SingleChildScrollView(
@@ -494,13 +500,19 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
           ),
           child: widget.isScrollingInitLoading
               ? SingleChildScrollView(
-            padding: EdgeInsets.only(bottom: widget.padding?.bottom??0,left: widget.padding?.left??0,right: widget.padding?.right??0,top: widget.isHideHeaderIfInitLoading?widget.padding?.top??0:0),
-            scrollDirection: widget.scrollDirection,
-            child: widget.initLoading ??
-                const Center(child: CircularProgressIndicator()),
-          )
+                  padding: EdgeInsets.only(
+                      bottom: widget.padding?.bottom ?? 0,
+                      left: widget.padding?.left ?? 0,
+                      right: widget.padding?.right ?? 0,
+                      top: widget.isHideHeaderIfInitLoading
+                          ? widget.padding?.top ?? 0
+                          : 0),
+                  scrollDirection: widget.scrollDirection,
+                  child: widget.initLoading ??
+                      const Center(child: CircularProgressIndicator()),
+                )
               : widget.initLoading ??
-              const Center(child: CircularProgressIndicator())),
+                  const Center(child: CircularProgressIndicator())),
     );
   }
 
@@ -509,8 +521,9 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
       return const SizedBox();
     } else {
       return LayoutBuilder(builder: (context, constraints) {
-        double minHeight =
-        widget.isScrollEnabled?0:constraints.maxHeight - (widget.padding?.vertical ?? 0);
+        double minHeight = widget.isScrollEnabled
+            ? 0
+            : constraints.maxHeight - (widget.padding?.vertical ?? 0);
         return SingleChildScrollView(
           padding: widget.padding,
           physics: physics,
@@ -520,7 +533,7 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
             ),
             child: Align(
               alignment:
-              widget.isEmptyCenter ? Alignment.center : Alignment.topCenter,
+                  widget.isEmptyCenter ? Alignment.center : Alignment.topCenter,
               child: widget.empty ??
                   EmptyView(
                     message: widget.emptyMessage ?? "No Data Available",
@@ -540,7 +553,9 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
         physics: physics,
         child: ConstrainedBox(
           constraints: BoxConstraints(
-              minHeight: widget.isScrollEnabled?0:constraints.maxHeight - (widget.padding?.vertical ?? 0)),
+              minHeight: widget.isScrollEnabled
+                  ? 0
+                  : constraints.maxHeight - (widget.padding?.vertical ?? 0)),
           child: Align(
             alignment: widget.isEmptySearchCenter
                 ? Alignment.center
@@ -568,12 +583,15 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
             runSpacing: widget.runSpacingWrap,
             spacing: widget.spacingWrap,
             children: List.generate(items.length,
-                    (index) => widget.itemBuilder(items[index], index)),
+                (index) => widget.itemBuilder(items[index], index)),
           ),
           if (shouldShowLoadMore && hasMoreData && !isRefreshing)
-            widget.isShowLoadMoreLoading?widget.loadMoreLoading ??
-                const Center(child: CircularProgressIndicator()):const SizedBox(),
-          if (widget.isGetMoreEnabled && shouldShowLoadMore &&
+            widget.isShowLoadMoreLoading
+                ? widget.loadMoreLoading ??
+                    const Center(child: CircularProgressIndicator())
+                : const SizedBox(),
+          if (widget.isGetMoreEnabled &&
+              shouldShowLoadMore &&
               shouldShowNoMoreData &&
               widget.isShowNoMoreData &&
               !hasMoreData &&
@@ -604,9 +622,10 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
             itemBuilder: (context, index) {
               if (index == items.length) {
                 if (shouldShowLoadMore && hasMoreData && !isRefreshing) {
-                  return
-                    widget.isShowLoadMoreLoading?widget.loadMoreLoading ??
-                        const Center(child: CircularProgressIndicator()):const SizedBox();
+                  return widget.isShowLoadMoreLoading
+                      ? widget.loadMoreLoading ??
+                          const Center(child: CircularProgressIndicator())
+                      : const SizedBox();
                 }
                 if (shouldShowLoadMore &&
                     shouldShowNoMoreData &&
@@ -628,14 +647,25 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
       physics: physics,
       scrollDirection: widget.scrollDirection,
       shrinkWrap: true,
-      padding: EdgeInsets.only(bottom: widget.padding?.bottom??0,left: widget.padding?.left??0,right: widget.padding?.right??0,top: widget.header==null?(widget.padding?.top??0):widget.isScrollingHeader?(widget.padding?.top??0):0),
+      padding: EdgeInsets.only(
+          bottom: widget.padding?.bottom ?? 0,
+          left: widget.padding?.left ?? 0,
+          right: widget.padding?.right ?? 0,
+          top: widget.header == null
+              ? (widget.padding?.top ?? 0)
+              : widget.isScrollingHeader
+                  ? (widget.padding?.top ?? 0)
+                  : 0),
       controller: scrollController,
       itemCount: countItems(),
       itemBuilder: (context, index) {
         if (widget.isScrollingHeader &&
             widget.header != null &&
             index == 0 &&
-            !(widget.isHideHeaderIfError && error != null && items.isEmpty && !isInitLoading) &&
+            !(widget.isHideHeaderIfError &&
+                error != null &&
+                items.isEmpty &&
+                !isInitLoading) &&
             !(widget.isHideHeaderIfEmpty && items.isEmpty && !isInitLoading)) {
           return MediaQuery.removePadding(
             context: context,
@@ -648,11 +678,13 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
         }
         if (index == countItems() - 1) {
           if (shouldShowLoadMore && hasMoreData && !isRefreshing) {
-            return
-              widget.isShowLoadMoreLoading?widget.loadMoreLoading ??
-                  const Center(child: CircularProgressIndicator()):const SizedBox();
+            return widget.isShowLoadMoreLoading
+                ? widget.loadMoreLoading ??
+                    const Center(child: CircularProgressIndicator())
+                : const SizedBox();
           }
-          if (widget.isGetMoreEnabled && shouldShowLoadMore &&
+          if (widget.isGetMoreEnabled &&
+              shouldShowLoadMore &&
               shouldShowNoMoreData &&
               widget.isShowNoMoreData &&
               !hasMoreData &&
@@ -690,12 +722,15 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
                 (!widget.isScrollingHeader ||
                     (widget.isScrollingHeader &&
                         !widget.isHideHeaderIfInitLoading &&
-                        isInitLoading)||(widget.isScrollingHeader &&
-                    !widget.isHideHeaderIfEmpty && items.isEmpty &&
-                    !isInitLoading)) &&
+                        isInitLoading) ||
+                    (widget.isScrollingHeader &&
+                        !widget.isHideHeaderIfEmpty &&
+                        items.isEmpty &&
+                        !isInitLoading)) &&
                 !(widget.isHideHeaderIfError &&
                     error != null &&
-                    !isInitLoading && items.isEmpty) &&
+                    !isInitLoading &&
+                    items.isEmpty) &&
                 !(widget.isHideHeaderIfEmpty &&
                     items.isEmpty &&
                     !isInitLoading) &&
@@ -703,12 +738,13 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
               Padding(
                 padding: EdgeInsets.only(
                   bottom: widget.spaceBetweenHeaderAndContent,
-                  left: widget.isHeaderPadding?widget.padding?.left ?? 0:0,
-                  right: widget.isHeaderPadding?widget.padding?.right ?? 0:0,
-                  top: widget.isHeaderPadding?widget.padding?.top ?? 0:0,
+                  left: widget.isHeaderPadding ? widget.padding?.left ?? 0 : 0,
+                  right:
+                      widget.isHeaderPadding ? widget.padding?.right ?? 0 : 0,
+                  top: widget.isHeaderPadding ? widget.padding?.top ?? 0 : 0,
                 ),
                 child: widget.header!.addParentX(
-                      (child) => MediaQuery.removePadding(
+                  (child) => MediaQuery.removePadding(
                     context: context,
                     removeLeft: true,
                     removeRight: true,
@@ -720,15 +756,15 @@ class ScrollRefreshLoadMoreXState<T> extends State<ScrollRefreshLoadMoreX<T>> {
                 ),
               ),
             buildContent().addParentX(
-                  (child) => Expanded(child: child),
+              (child) => Expanded(child: child),
               condition:
-              widget.isExpanded && widget.scrollDirection == Axis.vertical,
+                  widget.isExpanded && widget.scrollDirection == Axis.vertical,
             ),
           ],
         ),
       ),
     ).addParentX(
-          (child) => Expanded(child: child),
+      (child) => Expanded(child: child),
       condition: widget.isExpanded &&
           widget.scrollDirection == Axis.vertical &&
           parentWidget != null,

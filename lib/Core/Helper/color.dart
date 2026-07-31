@@ -4,16 +4,15 @@ part of '../core.dart';
 /// Color conversion processes
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class ColorHelperX{
-
+class ColorHelperX {
   /// Convert a color to a list of gradient colors from light to dark
   static MaterialColor toMaterial(Color color) {
     List strengths = <double>[.05];
     List dss = <double>[1];
     Map<int, Color> swatch = {};
-    final int r = color.red, g = color.green, b = color.blue;
+    final int r = color.r.toInt(), g = color.g.toInt(), b = color.b.toInt();
 
-    for (int i = 1,j = 10; i < 10; i++,j--) {
+    for (int i = 1, j = 10; i < 10; i++, j--) {
       strengths.add(0.1 * i);
       dss.add(0.1 * j);
     }
@@ -26,6 +25,6 @@ class ColorHelperX{
         1,
       );
     }
-    return MaterialColor(color.value, swatch);
+    return MaterialColor(color.toARGB32(), swatch);
   }
 }

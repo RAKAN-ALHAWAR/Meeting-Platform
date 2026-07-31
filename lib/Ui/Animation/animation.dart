@@ -1,5 +1,3 @@
-library animation;
-
 import 'package:meeting/Config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

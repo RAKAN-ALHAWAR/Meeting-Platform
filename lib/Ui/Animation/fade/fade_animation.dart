@@ -1,5 +1,3 @@
-library fade_animation_x;
-
 import 'package:flutter/material.dart';
 
 part 'lib/fade_animation_extension.dart';

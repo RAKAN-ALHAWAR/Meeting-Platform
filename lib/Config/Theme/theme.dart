@@ -7,11 +7,13 @@ part of '../config.dart';
 class ThemeX {
   //============================================================================
   // Functions
-  static ThemeMode get getTheme => isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  static ThemeMode get getTheme =>
+      isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
   static bool get isDarkMode => LocalDataX.themeIsDark;
 
-  static change(bool val) => Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+  static change(bool val) =>
+      Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
 
   //============================================================================
   // Data
@@ -55,22 +57,22 @@ class ThemeX {
     // The color of the flashing effect when you click on an item
 
     colorScheme: ColorScheme.fromSeed(
-        // Determines if the theme is light or dark
-        brightness: Brightness.light,
-        primary: ColorX.primary,
-        onPrimary: ColorX.primary.shade50,
-        seedColor: ColorX.primary,
-        secondary: ColorX.grey.shade500,
-        onSecondary: ColorX.grey.shade50,
-        error: ColorX.danger,
-        onError: ColorX.danger.shade50,
-        outline: ColorX.grey.shade200,
+      // Determines if the theme is light or dark
+      brightness: Brightness.light,
+      primary: ColorX.primary,
+      onPrimary: ColorX.primary.shade50,
+      seedColor: ColorX.primary,
+      secondary: ColorX.grey.shade500,
+      onSecondary: ColorX.grey.shade50,
+      error: ColorX.danger,
+      onError: ColorX.danger.shade50,
+      outline: ColorX.grey.shade200,
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       shadowColor: Colors.transparent,
     ),
-    cardTheme: CardTheme(color: ColorX.grey.shade50),
+    cardTheme: CardThemeData(color: ColorX.grey.shade50),
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
@@ -121,9 +123,9 @@ class ThemeX {
     disabledColor: ColorX.grey.shade600,
 
     /// Effect Color
-    highlightColor: ColorX.primary.shade900.withOpacity(0.5),
+    highlightColor: ColorX.primary.shade900.withValues(alpha: 0.5),
     // The color of the circle that selects the clicked item
-    splashColor: ColorX.primary.shade900.withOpacity(0.6),
+    splashColor: ColorX.primary.shade900.withValues(alpha: 0.6),
     // The color of the flashing effect when you click on an item
 
     colorScheme: ColorScheme.fromSeed(
@@ -137,7 +139,7 @@ class ThemeX {
       error: ColorX.danger.shade500,
       onError: ColorX.danger.shade300,
     ),
-    cardTheme: CardTheme(color: ColorX.grey.shade700),
+    cardTheme: CardThemeData(color: ColorX.grey.shade700),
     appBarTheme: AppBarTheme(
       backgroundColor: ColorX.grey.shade600,
       shadowColor: Colors.transparent,

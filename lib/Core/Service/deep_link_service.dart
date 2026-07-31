@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meeting/Config/config.dart';
 import 'package:meeting/Ui/Screen/Meeting/AllMeetings/controller/controller.dart';
@@ -34,13 +33,9 @@ class DeepLinkServiceX {
             _handleUri(uri);
           }
         },
-        onError: (err) {
-          print('Error listening to deep link: $err');
-        },
+        onError: (err) {},
       );
-    } catch (e) {
-      print('Error initializing deep link: $e');
-    }
+    } catch (_) {}
   }
 
   /// Cancel stream subscription (optional, on dispose)

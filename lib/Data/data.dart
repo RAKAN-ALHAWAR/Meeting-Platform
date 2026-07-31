@@ -1,5 +1,3 @@
-library data;
-
 import 'dart:async';
 import 'package:meeting/Core/Extension/convert/convert.dart';
 import 'package:meeting/Core/core.dart';
@@ -53,8 +51,6 @@ part 'Local/config/local_key.dart';
 part 'Local/local_data.dart';
 part 'Local/storage/hive.dart';
 part 'Model/Basic/scroll_refresh_load_more_parameters.dart';
-
-
 
 // ~~~~~~~~~~~~~~~~~~~~~~~{{ Why this section }}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// Control all types of data within the application, including static data,

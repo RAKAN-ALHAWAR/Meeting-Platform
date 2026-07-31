@@ -1,5 +1,3 @@
-library core;
-
 import 'dart:async';
 import 'dart:io';
 import 'package:meeting/Core/Extension/convert/convert.dart';
@@ -24,7 +22,6 @@ part 'Helper/catch_error.dart';
 part 'Helper/color.dart';
 part 'Helper/devise.dart';
 part 'Util/validate.dart';
-part 'Util/creditCard.dart';
 part 'Helper/http_overrides.dart';
 // ~~~~~~~~~~~~~~~~~~~~~~~{{ Why this section }}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// Controlling the internal processes of an application and general controllers,

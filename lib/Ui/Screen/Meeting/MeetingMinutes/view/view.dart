@@ -26,14 +26,17 @@ class MeetingMinutesView extends GetView<MeetingMinutesController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              const ShimmerAnimationX(height: 550),
-              const SizedBox(height: 16),
-                Row(children: [
-                  Flexible(child: ShimmerAnimationShapeX.button()),
-                  const SizedBox(width: 8),
-                  Flexible(child: ShimmerAnimationShapeX.button()),
-                ],)
-            ],),
+                const ShimmerAnimationX(height: 550),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Flexible(child: ShimmerAnimationShapeX.button()),
+                    const SizedBox(width: 8),
+                    Flexible(child: ShimmerAnimationShapeX.button()),
+                  ],
+                )
+              ],
+            ),
           ),
           child: (data) => Padding(
             padding: StyleX.paddingApp,
@@ -53,11 +56,13 @@ class MeetingMinutesView extends GetView<MeetingMinutesController> {
                         const double a4AspectRatio = 1122.5 / 793.7;
                         final double availableWidth = constraints.maxWidth;
                         final double availableHeight = constraints.maxHeight;
-                        double calculatedHeight = availableWidth * a4AspectRatio;
+                        double calculatedHeight =
+                            availableWidth * a4AspectRatio;
                         if (calculatedHeight > availableHeight) {
                           calculatedHeight = availableHeight;
                         }
-                        final double calculatedWidth = calculatedHeight / a4AspectRatio;
+                        final double calculatedWidth =
+                            calculatedHeight / a4AspectRatio;
                         return ContainerX(
                           width: calculatedWidth,
                           height: calculatedHeight,
@@ -70,7 +75,6 @@ class MeetingMinutesView extends GetView<MeetingMinutesController> {
                             filePath: controller.file.value.path,
                             swipeHorizontal: true,
                             backgroundColor: Get.theme.cardColor,
-
                           ),
                         ).fadeAnimation200;
                       },
@@ -79,24 +83,29 @@ class MeetingMinutesView extends GetView<MeetingMinutesController> {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      if(controller.myAttendance.value!=null)
-                      Flexible(
-                        child: AbsorbPointer(
-                          absorbing: controller.meeting.value.isCloseRecord || controller.myAttendance.value!.signature!=null,
-                          child: Opacity(
-                            opacity: controller.meeting.value.isCloseRecord || controller.myAttendance.value!.signature!=null
-                                ? 0.5
-                                : 1,
-                            child: ButtonStateX(
-                              text: 'Signature',
-                              state: controller.buttonStateSignature.value,
-                              onTap: controller.onSignature,
+                      if (controller.myAttendance.value != null)
+                        Flexible(
+                          child: AbsorbPointer(
+                            absorbing: controller.meeting.value.isCloseRecord ||
+                                controller.myAttendance.value!.signature !=
+                                    null,
+                            child: Opacity(
+                              opacity: controller.meeting.value.isCloseRecord ||
+                                      controller
+                                              .myAttendance.value!.signature !=
+                                          null
+                                  ? 0.5
+                                  : 1,
+                              child: ButtonStateX(
+                                text: 'Signature',
+                                state: controller.buttonStateSignature.value,
+                                onTap: controller.onSignature,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      if(controller.myAttendance.value!=null)
-                      const SizedBox(width: 8),
+                      if (controller.myAttendance.value != null)
+                        const SizedBox(width: 8),
                       Flexible(
                         child: AbsorbPointer(
                           absorbing: !controller.meeting.value.isCloseRecord,

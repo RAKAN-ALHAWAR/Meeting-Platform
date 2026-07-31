@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../../Config/config.dart';
 import '../../../../UI/Widget/widget.dart';
 import '../controller/controller.dart';
@@ -22,7 +21,7 @@ class MyWebViewView extends GetView<MyWebViewController> {
                 child: CircularProgressIndicator(),
               );
             }
-            if(controller.isUrlValid.value){
+            if (controller.isUrlValid.value) {
               if (controller.isGoogleMeet.value) {
                 return Center(
                   child: TextX(
@@ -33,19 +32,19 @@ class MyWebViewView extends GetView<MyWebViewController> {
                 );
               } else {
                 return Obx(
-                      () => Stack(
+                  () => Stack(
                     children: [
                       SizedBox(
                         height: double.maxFinite,
                         width: double.maxFinite,
                         child: InAppWebView(
                           initialUrlRequest:
-                          URLRequest(url: WebUri(controller.webUrl)),
+                              URLRequest(url: WebUri(controller.webUrl)),
                           onWebViewCreated: (cont) {
                             controller.webViewController = cont;
                           },
                           shouldOverrideUrlLoading:
-                          controller.shouldOverrideUrlLoading,
+                              controller.shouldOverrideUrlLoading,
                           onProgressChanged: (cont, progress) {
                             controller.updateLoadingProgress(progress);
                           },
@@ -58,16 +57,13 @@ class MyWebViewView extends GetView<MyWebViewController> {
 
                             controller.evaluateJavascript(
                                 source:
-                                'javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("axs-wallet-copy-clipboard", msg); }');
+                                    'javascript:navigator.clipboard.writeText = (msg) => { return window.flutter_inappwebview?.callHandler("axs-wallet-copy-clipboard", msg); }');
 
                             controller.addJavaScriptHandler(
                               handlerName: 'axs-wallet-copy-clipboard',
-                              callback: (args) {
-                                print(args);
-                              },
+                              callback: (args) {},
                             );
                           },
-
                           onReceivedError: (cont, request, error) {
                             // controller.errorMessage.value =
                             // "⚠️ ${'Error loading page'.tr}: ${error.description}";
@@ -90,9 +86,7 @@ class MyWebViewView extends GetView<MyWebViewController> {
                             allowsAirPlayForMediaPlayback: true,
                             allowBackgroundAudioPlaying: true,
                           ),
-                          onConsoleMessage: (controller, consoleMessage) {
-                          print("JS Console: ${consoleMessage.message}");
-                        },
+                          onConsoleMessage: (controller, consoleMessage) {},
                         ),
                       ),
                       if (controller.isLoading.value ||

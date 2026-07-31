@@ -45,7 +45,6 @@ class LoginController extends GetxController {
   onTapError() {}
   onChangeCountryCode(String code) => countryCode.value = int.parse(code);
 
-
   Future<void> onLogin() async {
     if (isLoading.isFalse) {
       if (formKey.currentState!.validate()) {
@@ -58,11 +57,11 @@ class LoginController extends GetxController {
           // }
           if (isPhone.value) {
             await loginByPhone();
-          }else {
+          } else {
             await loginByIdNumber();
           }
 
-          if(!isPhone.value) {
+          if (!isPhone.value) {
             /// The time delay here is aesthetically beneficial
             buttonState.value = ButtonStateEX.success;
             await Future.delayed(
@@ -71,7 +70,6 @@ class LoginController extends GetxController {
 
             Get.offAndToNamed(RouteNameX.root);
           }
-
         } catch (e) {
           error.value = e.toErrorX;
           error.value!.log();
@@ -83,7 +81,7 @@ class LoginController extends GetxController {
         /// Reset the button state
         Timer(
           const Duration(seconds: StyleX.returnButtonToNormalStateSecond),
-              () {
+          () {
             buttonState.value = ButtonStateEX.normal;
           },
         );
@@ -94,25 +92,20 @@ class LoginController extends GetxController {
   }
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId:  "451124782998-c10f0kag25irg5c4p0a46h499b8cnhut.apps.googleusercontent.com",
-    serverClientId: "451124782998-c10f0kag25irg5c4p0a46h499b8cnhut.apps.googleusercontent.com",
+    clientId:
+        "451124782998-c10f0kag25irg5c4p0a46h499b8cnhut.apps.googleusercontent.com",
+    serverClientId:
+        "451124782998-c10f0kag25irg5c4p0a46h499b8cnhut.apps.googleusercontent.com",
   );
 
-
   Future<void> sendAuthCodeToBackend(String authCode) async {
-    final response = await http.post(
+    await http.post(
       Uri.parse("https://meeting.edialoguec.sa/api/auth/google"),
       body: {'code': authCode},
     );
-
-    if (response.statusCode == 200) {
-      print("تمت المصادقة بنجاح مع الباك اند!");
-      print(response.body);
-    } else {
-      print("فشل المصادقة مع الباك اند: ${response.body}");
-    }
   }
-  onLoginByGoogle()async{
+
+  onLoginByGoogle() async {
     if (isLoading.isFalse) {
       isLoading.value = true;
       buttonGoogleState.value = ButtonStateEX.loading;
@@ -120,20 +113,19 @@ class LoginController extends GetxController {
       try {
         final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
         if (googleUser == null) {
-          print("تم إلغاء تسجيل الدخول");
           buttonGoogleState.value = ButtonStateEX.normal;
           return;
         }
 
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
 
         final String? authCode = googleAuth.serverAuthCode;
         if (authCode != null) {
-          print("تم الحصول على Auth Code: $authCode");
-
           // إرسال الكود إلى الباك اند
           await sendAuthCodeToBackend(authCode);
         }
+
         /// The time delay here is aesthetically beneficial
         buttonGoogleState.value = ButtonStateEX.success;
         await Future.delayed(
@@ -150,7 +142,7 @@ class LoginController extends GetxController {
       /// Reset the button state
       Timer(
         const Duration(seconds: StyleX.returnButtonToNormalStateSecond),
-            () {
+        () {
           buttonGoogleState.value = ButtonStateEX.normal;
         },
       );
@@ -178,7 +170,8 @@ class LoginController extends GetxController {
     app.user = (await DatabaseX.login(
       email: email.text.trim(),
       password: password.text.trim(),
-    )).obs;
+    ))
+        .obs;
 
     /// save data on local
     LocalDataX.put(LocalKeyX.token, app.user.value.token);
@@ -188,10 +181,11 @@ class LoginController extends GetxController {
 
   Future<String?> loginByPhone() async {
     String? massage = await DatabaseX.loginByPhone(
-      phone: phone.text.toIntX, countryCode: countryCode.value,
+      phone: phone.text.toIntX,
+      countryCode: countryCode.value,
     );
 
-    if(massage!=null){
+    if (massage != null) {
       ToastX.success(message: massage);
     }
 
@@ -214,16 +208,16 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginByIdNumber() async {
-    app.user =(await DatabaseX.login(
+    app.user = (await DatabaseX.login(
       email: idNumber.text.trim(),
       password: password.text.trim(),
-    )).obs;
+    ))
+        .obs;
 
     /// save data on local
     LocalDataX.put(LocalKeyX.token, app.user.value.token);
     LocalDataX.put(LocalKeyX.route, RouteNameX.root);
     app.isLogin.value = true;
-
   }
 
   onForgotPassword() {

@@ -19,7 +19,7 @@ class AppBarTransparent extends StatelessWidget {
           Colors.black38,
           Colors.black26,
           Colors.black12,
-          Colors.black12.withOpacity(0),
+          Colors.black12.withValues(alpha: 0),
         ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
       ),
       child: Row(

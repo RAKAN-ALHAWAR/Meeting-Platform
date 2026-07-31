@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meeting/Data/Model/attachment/attachment.dart';
@@ -44,19 +46,19 @@ class FileReaderController extends GetxController {
       }
     }
   }
+
   void handleDoubleTap() {
     if (transformationController.value != Matrix4.identity()) {
       transformationController.value = Matrix4.identity();
     } else {
       final position = doubleTapDetails.localPosition;
       transformationController.value = Matrix4.identity()
-      // For a 3x zoom
+        // For a 3x zoom
         // ..translate(-position.dx * 2, -position.dy * 2)
         // ..scale(3.0);
-      // Fox a 2x zoom
-      ..translate(-position.dx, -position.dy)
-      ..scale(2.0);
+        // Fox a 2x zoom
+        ..translate(-position.dx, -position.dy)
+        ..scale(2.0);
     }
   }
-
 }

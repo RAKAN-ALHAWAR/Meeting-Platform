@@ -23,7 +23,7 @@ addSignatureSheetX({bool isMinutes = false}) {
   //============================================================================
   // Content
   return bottomSheetX(
-    title: isMinutes?'Sign the minutes':'Add new signature',
+    title: isMinutes ? 'Sign the minutes' : 'Add new signature',
     isScrollEnabled: false,
     child: Obx(
       () => AbsorbPointer(
@@ -88,7 +88,8 @@ addSignatureSheetX({bool isMinutes = false}) {
                 file: File(controller.image.value!.path),
                 name: controller.image.value!.name,
                 onDelete: controller.onDeleteImage,
-                size: '${controller.imageSize.value.$2!.tr} ${controller.imageSize.value.$1!}',
+                size:
+                    '${controller.imageSize.value.$2!.tr} ${controller.imageSize.value.$1!}',
               ).fadeAnimation150,
             if (controller.isImage.isFalse)
               Column(
@@ -301,11 +302,11 @@ addSignatureSheetX({bool isMinutes = false}) {
                     () => ButtonStateX(
                       state: controller.buttonState.value,
                       onTap: controller.onSave,
-                      text: isMinutes?'Approve':'Save',
+                      text: isMinutes ? 'Approve' : 'Save',
                       disabled: controller.isDone.isFalse,
                       colorDisabledButton: Get.context!.isDarkMode
-                          ? ColorX.primary.shade300.withOpacity(0.2)
-                          : ColorX.primary.withOpacity(0.4),
+                          ? ColorX.primary.shade300.withValues(alpha: 0.2)
+                          : ColorX.primary.withValues(alpha: 0.4),
                       colorDisabledBorder: Colors.transparent,
                       colorDisabledText: Get.context!.isDarkMode
                           ? Colors.white38

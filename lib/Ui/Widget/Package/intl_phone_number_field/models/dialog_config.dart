@@ -30,12 +30,12 @@ class DialogConfig {
     TextStyle? searchBoxHintStyle,
   })  : textStyle = textStyle ??
             TextStyle(
-                color: const Color(0xFFFAFAFA).withOpacity(0.7),
+                color: const Color(0xFFFAFAFA).withValues(alpha: 0.7),
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
         searchBoxTextStyle = searchBoxTextStyle ??
             TextStyle(
-                color: const Color(0xFFFAFAFA).withOpacity(0.7),
+                color: const Color(0xFFFAFAFA).withValues(alpha: 0.7),
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
         titleStyle = titleStyle ??
@@ -45,7 +45,7 @@ class DialogConfig {
                 fontWeight: FontWeight.w700),
         searchBoxHintStyle = searchBoxHintStyle ??
             TextStyle(
-                color: const Color(0xFFFAFAFA).withOpacity(0.7),
+                color: const Color(0xFFFAFAFA).withValues(alpha: 0.7),
                 fontSize: 14,
                 fontWeight: FontWeight.w600);
 }

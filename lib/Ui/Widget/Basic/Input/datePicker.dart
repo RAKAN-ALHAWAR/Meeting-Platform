@@ -59,7 +59,6 @@ class DatePickerX extends StatefulWidget {
   final Color? blockedDayBackgroundColor;
   final Color? selectedDayBackgroundColor;
 
-
   final BorderRadius? todayBackgroundRadius;
   final BorderRadius? dayBackgroundRadius;
   final BorderRadius? dayDisabledBackgroundRadius;
@@ -69,7 +68,7 @@ class DatePickerX extends StatefulWidget {
   final IconData lastIcon;
   final IconData nextIcon;
 
-   DatePickerX({
+  DatePickerX({
     super.key,
     this.initialDate,
     this.selectedDate,
@@ -126,9 +125,9 @@ class DatePickerX extends StatefulWidget {
     this.nextIcon = Icons.arrow_forward,
     this.readOnly = false,
     this.margin = EdgeInsets.zero,
-  }){
-     this.locale = locale ?? Locale(TranslationX.getLanguageCode);
-   }
+  }) {
+    this.locale = locale ?? Locale(TranslationX.getLanguageCode);
+  }
 
   @override
   State<DatePickerX> createState() => _DatePickerXState();
@@ -151,25 +150,35 @@ class _DatePickerXState extends State<DatePickerX> {
   }
 
   void _nextMonth() {
-    if (widget.lastDate == null || _displayedMonth.month < widget.lastDate!.month + 1 || _displayedMonth.year < widget.lastDate!.year) {
+    if (widget.lastDate == null ||
+        _displayedMonth.month < widget.lastDate!.month + 1 ||
+        _displayedMonth.year < widget.lastDate!.year) {
       setState(() {
-        _displayedMonth = DateTime(_displayedMonth.year, _displayedMonth.month + 1);
+        _displayedMonth =
+            DateTime(_displayedMonth.year, _displayedMonth.month + 1);
       });
     }
   }
 
   void _previousMonth() {
-    if (widget.firstDate == null || _displayedMonth.month > widget.firstDate!.month || _displayedMonth.year > widget.firstDate!.year) {
+    if (widget.firstDate == null ||
+        _displayedMonth.month > widget.firstDate!.month ||
+        _displayedMonth.year > widget.firstDate!.year) {
       setState(() {
-        _displayedMonth = DateTime(_displayedMonth.year, _displayedMonth.month - 1);
+        _displayedMonth =
+            DateTime(_displayedMonth.year, _displayedMonth.month - 1);
       });
     }
   }
 
   List<Widget> _buildDaysOfWeek() {
-    List<String> daysOfWeek = widget.weekdayLabels ?? intl.DateFormat.E(widget.locale.toString()).dateSymbols.STANDALONESHORTWEEKDAYS;
+    List<String> daysOfWeek = widget.weekdayLabels ??
+        intl.DateFormat.E(widget.locale.toString())
+            .dateSymbols
+            .STANDALONESHORTWEEKDAYS;
     int firstDayIndex = widget.firstDayOfWeek % 7;
-    daysOfWeek = daysOfWeek.skip(firstDayIndex).toList() + daysOfWeek.take(firstDayIndex).toList();
+    daysOfWeek = daysOfWeek.skip(firstDayIndex).toList() +
+        daysOfWeek.take(firstDayIndex).toList();
 
     return daysOfWeek.map((day) {
       return Expanded(
@@ -177,7 +186,9 @@ class _DatePickerXState extends State<DatePickerX> {
           child: TextX(
             day,
             style: widget.weekTextStyle ?? TextStyleX.supTitleLarge,
-            color: widget.weekColor ?? widget.weekTextStyle?.color ?? Theme.of(context).colorScheme.secondary,
+            color: widget.weekColor ??
+                widget.weekTextStyle?.color ??
+                Theme.of(context).colorScheme.secondary,
             fontWeight: widget.weekTextStyle?.fontWeight ?? FontWeight.w600,
           ),
         ),
@@ -186,10 +197,14 @@ class _DatePickerXState extends State<DatePickerX> {
   }
 
   List<Widget> _buildCalendarDays() {
-    int daysInMonth = DateTime(_displayedMonth.year, _displayedMonth.month + 1, 0).day;
-    DateTime firstDayOfMonth = DateTime(_displayedMonth.year, _displayedMonth.month, 1);
-    int startingWeekday = (firstDayOfMonth.weekday - widget.firstDayOfWeek + 7) % 7;
-    int daysInPreviousMonth = DateTime(_displayedMonth.year, _displayedMonth.month, 0).day;
+    int daysInMonth =
+        DateTime(_displayedMonth.year, _displayedMonth.month + 1, 0).day;
+    DateTime firstDayOfMonth =
+        DateTime(_displayedMonth.year, _displayedMonth.month, 1);
+    int startingWeekday =
+        (firstDayOfMonth.weekday - widget.firstDayOfWeek + 7) % 7;
+    int daysInPreviousMonth =
+        DateTime(_displayedMonth.year, _displayedMonth.month, 0).day;
 
     List<Widget> days = [];
     List<Widget> dayRows = [];
@@ -211,7 +226,8 @@ class _DatePickerXState extends State<DatePickerX> {
                 child: TextX(
                   '${daysInPreviousMonth - i + 1}',
                   style: widget.dayDisabledTextStyle,
-                  color: widget.dayDisabledColor ?? Theme.of(context).colorScheme.secondary,
+                  color: widget.dayDisabledColor ??
+                      Theme.of(context).colorScheme.secondary,
                 ),
               ),
             ),
@@ -223,13 +239,22 @@ class _DatePickerXState extends State<DatePickerX> {
     // Add days from the current month
     for (int day = 1; day <= daysInMonth; day++) {
       DateTime now = DateTime.now();
-      DateTime currentDate = DateTime(_displayedMonth.year, _displayedMonth.month, day);
-      bool isBlocked = widget.blockedDates.firstWhereOrNull((data) => DateTime(data.year, data.month, data.day).isSameDate(currentDate),) != null;
-      bool isDisabled = (widget.firstDate != null ? widget.firstDate!.toDateOnly.isAfter(currentDate) : false) ||
-          (widget.lastDate != null ? widget.lastDate!.toDateOnly.isBefore(currentDate) : false);
+      DateTime currentDate =
+          DateTime(_displayedMonth.year, _displayedMonth.month, day);
+      bool isBlocked = widget.blockedDates.firstWhereOrNull(
+            (data) => DateTime(data.year, data.month, data.day)
+                .isSameDate(currentDate),
+          ) !=
+          null;
+      bool isDisabled = (widget.firstDate != null
+              ? widget.firstDate!.toDateOnly.isAfter(currentDate)
+              : false) ||
+          (widget.lastDate != null
+              ? widget.lastDate!.toDateOnly.isBefore(currentDate)
+              : false);
       bool isToday = now.isSameDate(currentDate);
-      bool isSelected = _selectedDate?.isSameDate(currentDate)??false ||
-          _selectedDates.any((date) => date.isSameDate(currentDate));
+      bool isSelected = _selectedDate?.isSameDate(currentDate) ??
+          false || _selectedDates.any((date) => date.isSameDate(currentDate));
 
       days.add(
         Expanded(
@@ -239,9 +264,9 @@ class _DatePickerXState extends State<DatePickerX> {
                 if (!widget.readOnly) {
                   setState(() {
                     if (isSelected) {
-                      _selectedDates.removeWhere((date) =>
-                          date.isSameDate(currentDate));
-                      if (_selectedDate?.isSameDate(currentDate)??false ) {
+                      _selectedDates
+                          .removeWhere((date) => date.isSameDate(currentDate));
+                      if (_selectedDate?.isSameDate(currentDate) ?? false) {
                         _selectedDate = _selectedDates.isNotEmpty
                             ? _selectedDates.first
                             : widget.initialDate ?? DateTime.now();
@@ -256,33 +281,58 @@ class _DatePickerXState extends State<DatePickerX> {
               }
             },
             child: ContainerX(
-              color: isSelected ? widget.selectedDayBackgroundColor ?? Theme.of(context).primaryColor :
-              (isBlocked ? widget.blockedDayBackgroundColor :
-              isDisabled ? widget.dayDisabledBackgroundColor :
-              isToday ? widget.todayBackgroundColor ?? Theme.of(context).colorScheme.onPrimary.withOpacity(0.5) :
-              widget.dayBackgroundColor),
-              borderRadius: isSelected ? widget.selectedDayBackgroundRadius :
-              (isBlocked ? widget.blockedDayBackgroundRadius :
-              isDisabled ? widget.dayDisabledBackgroundRadius :
-              isToday ? widget.todayBackgroundRadius :
-              widget.dayBackgroundRadius),
+              color: isSelected
+                  ? widget.selectedDayBackgroundColor ??
+                      Theme.of(context).primaryColor
+                  : (isBlocked
+                      ? widget.blockedDayBackgroundColor
+                      : isDisabled
+                          ? widget.dayDisabledBackgroundColor
+                          : isToday
+                              ? widget.todayBackgroundColor ??
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary
+                                      .withValues(alpha: 0.5)
+                              : widget.dayBackgroundColor),
+              borderRadius: isSelected
+                  ? widget.selectedDayBackgroundRadius
+                  : (isBlocked
+                      ? widget.blockedDayBackgroundRadius
+                      : isDisabled
+                          ? widget.dayDisabledBackgroundRadius
+                          : isToday
+                              ? widget.todayBackgroundRadius
+                              : widget.dayBackgroundRadius),
               padding: widget.dayPadding,
               margin: widget.dayMargin,
               isBorder: false,
               child: Center(
                 child: TextX(
                   '$day',
-                  style: isSelected ? widget.selectedDayTextStyle :
-                  (isBlocked ? widget.blockedDayTextStyle :
-                  isDisabled ? widget.dayDisabledTextStyle :
-                  isToday ? widget.todayTextStyle :
-                  widget.dayTextStyle),
-                  color: isSelected ? widget.selectedDayColor ?? Colors.white :
-                  (isBlocked ? widget.blockedDayColor ?? Theme.of(context).colorScheme.error :
-                  isDisabled ? widget.dayDisabledColor ?? Theme.of(context).colorScheme.secondary :
-                  isToday ? widget.todayColor ?? Theme.of(context).primaryColor :
-                  widget.dayColor),
-                  fontWeight: !isBlocked && !isDisabled?FontWeight.w700:null,
+                  style: isSelected
+                      ? widget.selectedDayTextStyle
+                      : (isBlocked
+                          ? widget.blockedDayTextStyle
+                          : isDisabled
+                              ? widget.dayDisabledTextStyle
+                              : isToday
+                                  ? widget.todayTextStyle
+                                  : widget.dayTextStyle),
+                  color: isSelected
+                      ? widget.selectedDayColor ?? Colors.white
+                      : (isBlocked
+                          ? widget.blockedDayColor ??
+                              Theme.of(context).colorScheme.error
+                          : isDisabled
+                              ? widget.dayDisabledColor ??
+                                  Theme.of(context).colorScheme.secondary
+                              : isToday
+                                  ? widget.todayColor ??
+                                      Theme.of(context).primaryColor
+                                  : widget.dayColor),
+                  fontWeight:
+                      !isBlocked && !isDisabled ? FontWeight.w700 : null,
                 ),
               ),
             ),
@@ -314,7 +364,8 @@ class _DatePickerXState extends State<DatePickerX> {
                   child: TextX(
                     '$i',
                     style: widget.dayDisabledTextStyle,
-                    color: widget.dayDisabledColor ?? Theme.of(context).colorScheme.secondary,
+                    color: widget.dayDisabledColor ??
+                        Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),
@@ -343,22 +394,30 @@ class _DatePickerXState extends State<DatePickerX> {
           children: [
             InkResponse(
               onTap: _previousMonth,
-              child: Icon(widget.lastIcon,size: 15,),
+              child: Icon(
+                widget.lastIcon,
+                size: 15,
+              ),
             ),
             TextX(
               '${intl.DateFormat.MMM(widget.locale.toString()).format(_displayedMonth)} ${_displayedMonth.year}',
-              style: widget.monthTextStyle??TextStyleX.titleSmall,
+              style: widget.monthTextStyle ?? TextStyleX.titleSmall,
               color: widget.monthColor,
-              fontWeight: widget.monthTextStyle?.fontWeight??FontWeight.w700,
+              fontWeight: widget.monthTextStyle?.fontWeight ?? FontWeight.w700,
             ),
             InkResponse(
               onTap: _nextMonth,
-              child: Icon(widget.nextIcon,size: 15,),
+              child: Icon(
+                widget.nextIcon,
+                size: 15,
+              ),
             ),
           ],
         ),
-        const SizedBox(height:6),
-        Divider(color: ColorX.grey.shade100,),
+        const SizedBox(height: 6),
+        Divider(
+          color: ColorX.grey.shade100,
+        ),
         SizedBox(height: widget.heightBetweenYearAndWeek),
         Row(
           children: _buildDaysOfWeek(),

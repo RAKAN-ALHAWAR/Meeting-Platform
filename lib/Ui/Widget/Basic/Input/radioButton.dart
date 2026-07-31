@@ -34,26 +34,34 @@ class RadioButtonX<T> extends StatelessWidget {
       child: ContainerX(
         margin: margin,
         isBorder: true,
-        color: (check!=null?check!():value.hashCode == groupValue.hashCode)
-            ? context.isDarkMode
-                ? ColorX.primary.shade900.withOpacity(0.3)
-                : Theme.of(context).colorScheme.onPrimary
-            : color ?? Theme.of(context).cardTheme.color,
-        borderColor: (check!=null?check!():value.hashCode == groupValue.hashCode)
-            ? context.isDarkMode?Theme.of(context).primaryColor:ColorX.primary.shade700
-            : null,
-        padding: isCardOnly ? const EdgeInsets.symmetric(horizontal: 20,vertical: 14.0) : EdgeInsets.zero,
-        height: height??StyleX.inputHeight,
+        color:
+            (check != null ? check!() : value.hashCode == groupValue.hashCode)
+                ? context.isDarkMode
+                    ? ColorX.primary.shade900.withValues(alpha: 0.3)
+                    : Theme.of(context).colorScheme.onPrimary
+                : color ?? Theme.of(context).cardTheme.color,
+        borderColor:
+            (check != null ? check!() : value.hashCode == groupValue.hashCode)
+                ? context.isDarkMode
+                    ? Theme.of(context).primaryColor
+                    : ColorX.primary.shade700
+                : null,
+        padding: isCardOnly
+            ? const EdgeInsets.symmetric(horizontal: 20, vertical: 14.0)
+            : EdgeInsets.zero,
+        height: height ?? StyleX.inputHeight,
         child: Row(
           mainAxisAlignment:
               isCardOnly ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
             if (!isCardOnly)
               Radio(
-                value: valueCheck??value.hashCode,
+                value: valueCheck ?? value.hashCode,
                 groupValue: groupValue.hashCode,
                 fillColor: WidgetStateProperty.all(
-                  (check!=null?check!():value.hashCode == groupValue.hashCode)
+                  (check != null
+                          ? check!()
+                          : value.hashCode == groupValue.hashCode)
                       ? Theme.of(context).primaryColor
                       : ColorX.grey.shade300,
                 ), // Change the fill color when selected
@@ -61,12 +69,15 @@ class RadioButtonX<T> extends StatelessWidget {
                 onChanged: (_) => onChanged(value),
               ),
             Flexible(
-              child: child??TextX(
-                label??'',
-                color: (check!=null?check!():value.hashCode == groupValue.hashCode)
-                    ? Theme.of(context).primaryColor
-                    : null,
-              ),
+              child: child ??
+                  TextX(
+                    label ?? '',
+                    color: (check != null
+                            ? check!()
+                            : value.hashCode == groupValue.hashCode)
+                        ? Theme.of(context).primaryColor
+                        : null,
+                  ),
             ),
           ],
         ),

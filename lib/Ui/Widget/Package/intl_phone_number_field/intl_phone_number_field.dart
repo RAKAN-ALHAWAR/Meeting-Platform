@@ -44,26 +44,25 @@ class InternationalPhoneNumberInput extends StatefulWidget {
   final String? Function(String?)? validate;
   final bool isShowCountryCode;
   final bool isDisableChangeCountryCode;
-  InternationalPhoneNumberInput(
-      {super.key,
-      TextEditingController? controller,
-      this.height = 50,
-      this.inputFormatters = const [],
-      int? initCountry,
-      this.betweenPadding = 23,
-      this.onInputChanged,
-      this.loadFromJson,
-      this.formatter,
-      this.validate,
-      this.inactive = false,
-      this.isActiveError = false,
-      this.isShowCountryCode = true,
-      this.isDisableChangeCountryCode = false,
-      DialogConfig? dialogConfig,
-      CountryConfig? countryConfig,
-      PhoneConfig? phoneConfig,
-      })
-      : dialogConfig = dialogConfig ?? DialogConfig(),
+  InternationalPhoneNumberInput({
+    super.key,
+    TextEditingController? controller,
+    this.height = 50,
+    this.inputFormatters = const [],
+    int? initCountry,
+    this.betweenPadding = 23,
+    this.onInputChanged,
+    this.loadFromJson,
+    this.formatter,
+    this.validate,
+    this.inactive = false,
+    this.isActiveError = false,
+    this.isShowCountryCode = true,
+    this.isDisableChangeCountryCode = false,
+    DialogConfig? dialogConfig,
+    CountryConfig? countryConfig,
+    PhoneConfig? phoneConfig,
+  })  : dialogConfig = dialogConfig ?? DialogConfig(),
         controller = controller ?? TextEditingController(),
         countryConfig = countryConfig ?? CountryConfig(),
         initCountry = initCountry ?? 966,
@@ -113,93 +112,97 @@ class _InternationalPhoneNumberInputState
   @override
   Widget build(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      if(widget.isShowCountryCode)
-      Expanded(
-        flex: 10,
-        child: TextButton(
-          onPressed: () {
-            if (!widget.isDisableChangeCountryCode && !widget.inactive && countries != null) {
-              bottomSheetX(
-                isPaddingBottom: false,
-                title: widget.dialogConfig.title,
-                child: SafeArea(
-                  child: SingleChildScrollView(
-                    child: CountryCodeBottomSheet(
-                      validate: widget.validate,
-                      countries: countries!,
-                      selected: selected,
-                      onSelected: (countryCodeModel) {
-                        setState(() {
-                          selected = countryCodeModel;
-                        });
-                        if (widget.onInputChanged != null) {
-                          widget.onInputChanged!(IntPhoneNumber(
-                              code: selected.code,
-                              dial_code: selected.dial_code,
-                              number: widget.controller.text
-                                  .trimLeft()
-                                  .trimRight()));
-                        }
-                      },
-                      dialogConfig: widget.dialogConfig,
+      if (widget.isShowCountryCode)
+        Expanded(
+          flex: 10,
+          child: TextButton(
+            onPressed: () {
+              if (!widget.isDisableChangeCountryCode &&
+                  !widget.inactive &&
+                  countries != null) {
+                bottomSheetX(
+                  isPaddingBottom: false,
+                  title: widget.dialogConfig.title,
+                  child: SafeArea(
+                    child: SingleChildScrollView(
+                      child: CountryCodeBottomSheet(
+                        validate: widget.validate,
+                        countries: countries!,
+                        selected: selected,
+                        onSelected: (countryCodeModel) {
+                          setState(() {
+                            selected = countryCodeModel;
+                          });
+                          if (widget.onInputChanged != null) {
+                            widget.onInputChanged!(IntPhoneNumber(
+                                code: selected.code,
+                                dial_code: selected.dial_code,
+                                number: widget.controller.text
+                                    .trimLeft()
+                                    .trimRight()));
+                          }
+                        },
+                        dialogConfig: widget.dialogConfig,
+                      ),
                     ),
                   ),
-                ),
-              );
-            }
-          },
-          style: TextButton.styleFrom(
-            minimumSize: Size.zero,
-            padding: EdgeInsets.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: Container(
-            width: double.infinity,
-            height: StyleX.inputHeight,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadiusDirectional.horizontal(
-                  start: Radius.circular(StyleX.radius)),
-              border: Border.all(
-                width: StyleX.borderWidth,
-                color: Theme.of(context).dividerColor,
-              ),
-              color: context.isDarkMode
-                  ? ColorX.grey.shade800.withOpacity(0.6)
-                  : ColorX.grey.shade100,
+                );
+              }
+            },
+            style: TextButton.styleFrom(
+              minimumSize: Size.zero,
+              padding: EdgeInsets.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FlagView(
-                  countryCodeModel: selected,
-                  isFlat: widget.countryConfig.flatFlag,
-                  size: widget.countryConfig.flagSize,
+            child: Container(
+              width: double.infinity,
+              height: StyleX.inputHeight,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadiusDirectional.horizontal(
+                    start: Radius.circular(StyleX.radius)),
+                border: Border.all(
+                  width: StyleX.borderWidth,
+                  color: Theme.of(context).dividerColor,
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  selected.dial_code,
-                  style: widget.countryConfig.textStyle,
-                ),
-                if(!widget.isDisableChangeCountryCode)
-                Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Theme.of(context).iconTheme.color,
-                )
-              ],
+                color: context.isDarkMode
+                    ? ColorX.grey.shade800.withValues(alpha: 0.6)
+                    : ColorX.grey.shade100,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FlagView(
+                    countryCodeModel: selected,
+                    isFlat: widget.countryConfig.flatFlag,
+                    size: widget.countryConfig.flagSize,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    selected.dial_code,
+                    style: widget.countryConfig.textStyle,
+                  ),
+                  if (!widget.isDisableChangeCountryCode)
+                    Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: Theme.of(context).iconTheme.color,
+                    )
+                ],
+              ),
             ),
           ),
         ),
-      ),
       Expanded(
         flex: 20,
         child: Directionality(
-          textDirection: Directionality.of(Get.context!) == TextDirection.rtl ? TextDirection.rtl:TextDirection.ltr,
+          textDirection: Directionality.of(Get.context!) == TextDirection.rtl
+              ? TextDirection.rtl
+              : TextDirection.ltr,
           child: TextFieldX(
             color: widget.phoneConfig.color,
-            borderRadius:
-                const BorderRadius.horizontal(right: Radius.circular(StyleX.radius)),
-            borderErrorRadius:
-                const BorderRadius.horizontal(right: Radius.circular(StyleX.radius)),
+            borderRadius: const BorderRadius.horizontal(
+                right: Radius.circular(StyleX.radius)),
+            borderErrorRadius: const BorderRadius.horizontal(
+                right: Radius.circular(StyleX.radius)),
             margin: EdgeInsets.zero,
             validate: widget.validate,
             hint: widget.phoneConfig.hintText ?? "",

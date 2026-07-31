@@ -66,8 +66,9 @@ class MeetingMinutesController extends GetxController {
 
     permissions = result.$3.obs;
     attendances.value = meeting.value.attendances;
-    if(myAttendance.value==null){
-      myAttendance.value = attendances.firstWhereOrNull((e)=>e.userId==app.user.value.id);
+    if (myAttendance.value == null) {
+      myAttendance.value =
+          attendances.firstWhereOrNull((e) => e.userId == app.user.value.id);
     }
     for (var x in meeting.value.attendances
         .where((element) => element.signature != null)) {
@@ -257,7 +258,8 @@ class MeetingMinutesController extends GetxController {
                         font: fontRegular,
                         fontSize: 11,
                         letterSpacing: 0.15,
-                        color: PdfColor.fromInt(ColorX.grey.shade600.value),
+                        color:
+                            PdfColor.fromInt(ColorX.grey.shade600.toARGB32()),
                       ),
                     ),
                   if (recommendations.isNotEmpty)
@@ -297,7 +299,7 @@ class MeetingMinutesController extends GetxController {
       width: double.maxFinite,
       padding: const pw.EdgeInsets.symmetric(horizontal: 22, vertical: 12),
       decoration: pw.BoxDecoration(
-        color: PdfColor.fromInt(ColorX.grey.shade100.value),
+        color: PdfColor.fromInt(ColorX.grey.shade100.toARGB32()),
         borderRadius: pw.BorderRadius.circular(9),
       ),
       child: pw.Row(
@@ -310,7 +312,7 @@ class MeetingMinutesController extends GetxController {
                 font: fontBold,
                 fontSize: 12,
                 letterSpacing: 0.15,
-                color: PdfColor.fromInt(ColorX.grey.shade900.value),
+                color: PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
               ),
             ),
           ),
@@ -323,7 +325,7 @@ class MeetingMinutesController extends GetxController {
                 font: fontBold,
                 fontSize: 12,
                 letterSpacing: 0.15,
-                color: PdfColor.fromInt(ColorX.grey.shade900.value),
+                color: PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
               ),
             ),
           ),
@@ -336,7 +338,7 @@ class MeetingMinutesController extends GetxController {
                 font: fontBold,
                 fontSize: 12,
                 letterSpacing: 0.15,
-                color: PdfColor.fromInt(ColorX.grey.shade900.value),
+                color: PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
               ),
             ),
           ),
@@ -349,7 +351,7 @@ class MeetingMinutesController extends GetxController {
                 font: fontBold,
                 fontSize: 12,
                 letterSpacing: 0.15,
-                color: PdfColor.fromInt(ColorX.grey.shade900.value),
+                color: PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
               ),
             ),
           ),
@@ -367,7 +369,7 @@ class MeetingMinutesController extends GetxController {
       decoration: pw.BoxDecoration(
         border: pw.Border.all(
           width: 1,
-          color: PdfColor.fromInt(ColorX.grey.shade200.value),
+          color: PdfColor.fromInt(ColorX.grey.shade200.toARGB32()),
         ),
         borderRadius: pw.BorderRadius.circular(9),
       ),
@@ -382,7 +384,7 @@ class MeetingMinutesController extends GetxController {
                   font: fontRegular,
                   fontSize: 12,
                   letterSpacing: 0.15,
-                  color: PdfColor.fromInt(ColorX.grey.shade500.value),
+                  color: PdfColor.fromInt(ColorX.grey.shade500.toARGB32()),
                 ),
               ),
               pw.Text(
@@ -393,7 +395,7 @@ class MeetingMinutesController extends GetxController {
                   font: fontRegular,
                   fontSize: 12,
                   letterSpacing: 0.15,
-                  color: PdfColor.fromInt(ColorX.grey.shade700.value),
+                  color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
                 ),
               ),
             ]),
@@ -403,7 +405,7 @@ class MeetingMinutesController extends GetxController {
               horizontal: 26,
             ),
             child: pw.VerticalDivider(
-              color: PdfColor.fromInt(ColorX.grey.shade200.value),
+              color: PdfColor.fromInt(ColorX.grey.shade200.toARGB32()),
             ),
           ),
           pw.Expanded(
@@ -415,7 +417,7 @@ class MeetingMinutesController extends GetxController {
                   font: fontRegular,
                   fontSize: 12,
                   letterSpacing: 0.15,
-                  color: PdfColor.fromInt(ColorX.grey.shade500.value),
+                  color: PdfColor.fromInt(ColorX.grey.shade500.toARGB32()),
                 ),
               ),
               pw.Text(
@@ -426,7 +428,7 @@ class MeetingMinutesController extends GetxController {
                   font: fontRegular,
                   fontSize: 12,
                   letterSpacing: 0.15,
-                  color: PdfColor.fromInt(ColorX.grey.shade700.value),
+                  color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
                 ),
               ),
             ]),
@@ -451,7 +453,7 @@ class MeetingMinutesController extends GetxController {
                 font: fontRegular,
                 fontSize: 12,
                 letterSpacing: 0.15,
-                color: PdfColor.fromInt(ColorX.grey.shade700.value),
+                color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
               ),
             ),
           ),
@@ -466,7 +468,7 @@ class MeetingMinutesController extends GetxController {
                 font: fontRegular,
                 fontSize: 12,
                 letterSpacing: 0.15,
-                color: PdfColor.fromInt(ColorX.grey.shade700.value),
+                color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
               ),
             ),
           ),
@@ -481,7 +483,7 @@ class MeetingMinutesController extends GetxController {
                 font: fontRegular,
                 fontSize: 12,
                 letterSpacing: 0.15,
-                color: PdfColor.fromInt(ColorX.grey.shade700.value),
+                color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
               ),
             ),
           ),
@@ -497,7 +499,7 @@ class MeetingMinutesController extends GetxController {
 
   _divider() {
     return pw.Divider(
-      color: PdfColor.fromInt(ColorX.grey.shade200.value),
+      color: PdfColor.fromInt(ColorX.grey.shade200.toARGB32()),
     );
   }
 
@@ -509,7 +511,7 @@ class MeetingMinutesController extends GetxController {
           width: 4,
           height: 4,
           decoration: pw.BoxDecoration(
-            color: PdfColor.fromInt(Colors.black.value),
+            color: PdfColor.fromInt(Colors.black.toARGB32()),
             borderRadius: pw.BorderRadius.circular(2),
           ),
         ),
@@ -522,7 +524,7 @@ class MeetingMinutesController extends GetxController {
             font: fontRegular,
             fontSize: 11,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade900.value),
+            color: PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
           ),
         ),
       ],
@@ -541,7 +543,7 @@ class MeetingMinutesController extends GetxController {
             font: fontBold,
             fontSize: 14,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade900.value),
+            color: PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
           ),
         ),
         pw.SizedBox(height: 10),
@@ -553,7 +555,7 @@ class MeetingMinutesController extends GetxController {
     return pw.Container(
       height: 70,
       width: double.maxFinite,
-      color: PdfColor.fromInt(ColorX.primary.shade600.value),
+      color: PdfColor.fromInt(ColorX.primary.shade600.toARGB32()),
       padding: const pw.EdgeInsets.symmetric(vertical: 12, horizontal: 30),
       margin: const pw.EdgeInsets.only(bottom: 20),
       child: pw.Row(
@@ -567,7 +569,7 @@ class MeetingMinutesController extends GetxController {
               font: fontBold,
               letterSpacing: 0.15,
               fontSize: 16,
-              color: PdfColor.fromInt(Colors.white.value),
+              color: PdfColor.fromInt(Colors.white.toARGB32()),
             ),
           ),
         ],
@@ -588,7 +590,7 @@ class MeetingMinutesController extends GetxController {
               font: fontBold,
               fontSize: 16,
               letterSpacing: 0.15,
-              color: PdfColor.fromInt(ColorX.grey.shade900.value),
+              color: PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
             ),
           ),
           pw.SizedBox(height: 8),
@@ -612,7 +614,7 @@ class MeetingMinutesController extends GetxController {
             font: fontLight,
             fontSize: 10,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade700.value),
+            color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
           ),
         ),
         pw.Text(
@@ -622,7 +624,7 @@ class MeetingMinutesController extends GetxController {
             font: fontRegular,
             fontSize: 10,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade800.value),
+            color: PdfColor.fromInt(ColorX.grey.shade800.toARGB32()),
           ),
         ),
         pw.SizedBox(width: 16),
@@ -633,7 +635,7 @@ class MeetingMinutesController extends GetxController {
             font: fontLight,
             fontSize: 10,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade700.value),
+            color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
           ),
         ),
         pw.Text(
@@ -643,7 +645,7 @@ class MeetingMinutesController extends GetxController {
             font: fontRegular,
             fontSize: 10,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade800.value),
+            color: PdfColor.fromInt(ColorX.grey.shade800.toARGB32()),
           ),
         ),
       ],
@@ -670,7 +672,7 @@ class MeetingMinutesController extends GetxController {
             font: fontLight,
             fontSize: 10,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade700.value),
+            color: PdfColor.fromInt(ColorX.grey.shade700.toARGB32()),
           ),
         ),
         pw.Text(
@@ -680,7 +682,7 @@ class MeetingMinutesController extends GetxController {
             font: fontRegular,
             fontSize: 10,
             letterSpacing: 0.15,
-            color: PdfColor.fromInt(ColorX.grey.shade800.value),
+            color: PdfColor.fromInt(ColorX.grey.shade800.toARGB32()),
           ),
         ),
       ],
@@ -710,7 +712,8 @@ class MeetingMinutesController extends GetxController {
                           font: fontRegular,
                           fontSize: 10,
                           letterSpacing: 0.15,
-                          color: PdfColor.fromInt(ColorX.grey.shade900.value),
+                          color:
+                              PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
                         ),
                       ),
                     )),
@@ -725,7 +728,8 @@ class MeetingMinutesController extends GetxController {
                         font: fontRegular,
                         fontSize: 10,
                         letterSpacing: 0.15,
-                        color: PdfColor.fromInt(ColorX.grey.shade900.value),
+                        color:
+                            PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
                       ),
                     ),
                   ),
@@ -743,7 +747,8 @@ class MeetingMinutesController extends GetxController {
                           font: fontRegular,
                           fontSize: 10,
                           letterSpacing: 0.15,
-                          color: PdfColor.fromInt(ColorX.grey.shade900.value),
+                          color:
+                              PdfColor.fromInt(ColorX.grey.shade900.toARGB32()),
                         ),
                       ),
                     ),

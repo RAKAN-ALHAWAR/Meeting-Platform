@@ -90,8 +90,8 @@ class OTPView extends GetView<OTPController> {
                 text: 'Verify',
                 disabled: controller.isDoneInput.isFalse,
                 colorDisabledButton: context.isDarkMode
-                    ? ColorX.primary.shade300.withOpacity(0.2)
-                    : ColorX.primary.withOpacity(0.4),
+                    ? ColorX.primary.shade300.withValues(alpha: 0.2)
+                    : ColorX.primary.withValues(alpha: 0.4),
                 colorDisabledBorder: Colors.transparent,
                 colorDisabledText:
                     context.isDarkMode ? Colors.white38 : Colors.white,

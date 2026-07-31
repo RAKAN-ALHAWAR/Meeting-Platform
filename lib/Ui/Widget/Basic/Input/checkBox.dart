@@ -65,16 +65,19 @@ class _CheckBoxXState extends State<CheckBoxX> {
       child: ContainerX(
         margin: widget.margin,
         isBorder: true,
-        color: (widget.check != null ? widget.check!() : _value)&& !widget.strikethroughOnChecked
+        color: (widget.check != null ? widget.check!() : _value) &&
+                !widget.strikethroughOnChecked
             ? context.isDarkMode
-            ? ColorX.primary.shade900.withOpacity(0.3)
-            : Theme.of(context).colorScheme.onPrimary
+                ? ColorX.primary.shade900.withValues(alpha: 0.3)
+                : Theme.of(context).colorScheme.onPrimary
             : widget.color ?? Theme.of(context).cardTheme.color,
-        borderColor:widget.strikethroughOnChecked?null:(widget.check != null ? widget.check!() : _value)
-            ? context.isDarkMode
-            ? Theme.of(context).primaryColor
-            : ColorX.primary.shade700
-            : null,
+        borderColor: widget.strikethroughOnChecked
+            ? null
+            : (widget.check != null ? widget.check!() : _value)
+                ? context.isDarkMode
+                    ? Theme.of(context).primaryColor
+                    : ColorX.primary.shade700
+                : null,
         padding: widget.isCardOnly
             ? const EdgeInsets.symmetric(horizontal: 20, vertical: 14.0)
             : EdgeInsets.zero,
@@ -92,7 +95,7 @@ class _CheckBoxXState extends State<CheckBoxX> {
                   borderRadius: BorderRadius.circular(4.0),
                 ),
                 side: WidgetStateBorderSide.resolveWith(
-                      (states) => BorderSide(
+                  (states) => BorderSide(
                     width: 1.0,
                     color: ColorX.grey.shade300,
                   ),
@@ -102,16 +105,17 @@ class _CheckBoxXState extends State<CheckBoxX> {
               child: widget.child ??
                   TextX(
                     widget.label ?? '',
-                    style: (widget.textStyle??TextStyleX.titleMedium).copyWith(
+                    style:
+                        (widget.textStyle ?? TextStyleX.titleMedium).copyWith(
                       color: _value && widget.strikethroughOnChecked
                           ? ColorX.grey.shade400
                           : null,
                       decorationColor: _value && widget.strikethroughOnChecked
                           ? ColorX.grey.shade400
                           : null,
-                        decoration: widget.strikethroughOnChecked && _value
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
+                      decoration: widget.strikethroughOnChecked && _value
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
                     ),
                   ),
             ),
